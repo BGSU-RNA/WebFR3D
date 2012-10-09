@@ -20,11 +20,11 @@ my $TERM :shared = 0;
 my $IDLE_QUEUE = Thread::Queue->new();
 
 # WebFR3D InputScript directory
-my $WEBFR3D = '/Servers/rna.bgsu.edu/WebFR3D';
-my $INPUT_DIR = '/Servers/rna.bgsu.edu/WebFR3D/InputScript/Input';
-my $RUN_DIR = '/Servers/rna.bgsu.edu/WebFR3D/InputScript/Running';
+my $WEBFR3D = '/Servers/rna.bgsu.edu/webfred';
+my $INPUT_DIR = '/Servers/rna.bgsu.edu/webfred/InputScript/Input';
+my $RUN_DIR = '/Servers/rna.bgsu.edu/webfred/InputScript/Running';
 my $MATLAB = '/Applications/MATLAB_R2007b/bin/matlab -nojvm -nodisplay -r ';
-my $RESULTS = '/Servers/rna.bgsu.edu/WebFR3D/Results';
+my $RESULTS = '/Servers/rna.bgsu.edu/webfred/Results';
 
 # CPU time out for each query in seconds
 my $TIMEOUT = 1800;
@@ -68,19 +68,19 @@ MAIN:
     # open input directory
 #    opendir(IND, $INPUT_DIR) || die("Cannot open directory $INPUT_DIR");
 
-    # Manage the thread pool until signalled to terminate    
+    # Manage the thread pool until signalled to terminate
     while (! $TERM) {
-        
-       # get the queries 
+
+       # get the queries
        my @queries = <$INPUT_DIR/*.m>;
 
        if ( scalar(@queries) > 0 ) {
             # Wait for an available thread
             my $tid = $IDLE_QUEUE->dequeue();
-    
+
             # Check for termination condition
             last if ($tid < 0);
-    
+
             # Give the thread some work to do
             # my $work = 5 + int(rand(10));
             my $job = pop(@queries);
@@ -88,7 +88,7 @@ MAIN:
             $job = $parts[-1];
             my $command = 'mv ' . $INPUT_DIR . '/' . $job . ' ' . $RUN_DIR  . '/' . $job;
             system($command);
-            $command = $MATLAB . '"addpath(' . "'" . $WEBFR3D . "')" . ';aWebFR3D(' . "'" . $job . "')" . '"';            
+            $command = $MATLAB . '"addpath(' . "'" . $WEBFR3D . "')" . ';aWebFR3D(' . "'" . $job . "')" . '"';
             my $work = "ulimit -t $TIMEOUT;$command;perl $WEBFR3D" . '/' . "check_results.pl $job";
             $work_queues{$tid}->enqueue($work);
         }
@@ -104,7 +104,7 @@ MAIN:
 
     # Wait for all the threads to finish
     $_->join() foreach threads->list();
-    
+
 #    closedir(IND);
 }
 
@@ -136,7 +136,7 @@ sub worker
 
         # Do some work while monitoring $TERM
         printf("            %2d <- Working\n", $tid);
-        while (! $TERM) {        
+        while (! $TERM) {
             system($work);
             last;
         }
