@@ -1,0 +1,3 @@
+[submodule "FR3D_submodule"]
+	path = FR3D_submodule
+	url = git@github.com:BGSU-RNA/FR3D.git
