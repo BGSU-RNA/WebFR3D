@@ -1,0 +1,246 @@
+.message {
+	margin-left:auto;
+	margin-right:auto;
+	width:550px;
+	vertical-align:middle;
+	border-style:groove;
+	text-align:center;
+	position:relative;
+	top:20%;
+	border: 2px solid #DDD;
+	-webkit-box-shadow: #AAA 0px 2px 2px;
+	-moz-box-shadow:0px 2px 2px #AAA;
+	box-shadow:0px 2px 2px #AAA;
+	-moz-border-radius-topleft: 24px;
+	-moz-border-radius-topright:24px;
+	-webkit-border-top-left-radius:24px;
+	-webkit-border-top-right-radius:24px;
+	border-top-left-radius:24px;
+	border-top-right-radius:24px;
+	-moz-border-radius-bottomleft: 24px;
+	-moz-border-radius-bottomright:24px;
+	-webkit-border-bottom-left-radius:24px;
+	-webkit-border-bottom-right-radius:24px;
+	border-bottom-left-radius: 24px 24px;
+	border-bottom-right-radius: 24px 24px;
+	padding:4px;
+}
+div.checkboxes {
+     overflow: auto;
+	text-align:left;
+     width: 175px;
+     height: 360px;
+     position:absolute;
+	margin-right:15px;
+     margin-top:-5px;
+}
+div.checkboxwrapper {
+	position: absolute;
+}
+div.mastercheckbox {
+	position:absolute;
+	top: 355px;
+}
+#master1 {
+	visibility:visible;
+}
+#master0 {
+	visibility:hidden;
+}
+div.container {
+	padding: 10px;
+    margin-left:auto;
+    margin-right:auto;
+    width:900px;
+	border: 2px solid #DDD;
+	-webkit-box-shadow: #AAA 0px 2px 2px;
+	-moz-box-shadow:0px 2px 2px #AAA;
+	box-shadow:0px 2px 2px #AAA;
+	-moz-border-radius-topleft: 24px;
+	-moz-border-radius-topright:24px;
+	-webkit-border-top-left-radius:24px;
+	-webkit-border-top-right-radius:24px;
+	border-top-left-radius:24px;
+	border-top-right-radius:24px;
+	-moz-border-radius-bottomleft: 24px;
+	-moz-border-radius-bottomright:24px;
+	-webkit-border-bottom-left-radius:24px;
+	-webkit-border-bottom-right-radius:24px;
+	border-bottom-left-radius: 24px 24px;
+	border-bottom-right-radius: 24px 24px;
+}
+div.share {
+	position: relative;
+	top: 5px;
+}
+div.mainscroll, div.annotations, .results {
+	background-color:white;
+    font-size:smaller;
+    overflow: auto;
+    width: 800px;
+    height: 300px;
+    margin-left:auto;
+    margin-right:auto;
+	border: 2px solid #DDD;
+	-webkit-box-shadow: #AAA 0px 2px 2px;
+	-moz-box-shadow:0px 2px 2px #AAA;
+	box-shadow:0px 2px 2px #AAA;
+	padding:0px;
+}
+.pdblink {
+	text-decoration: none;
+	border-bottom:1px dotted;
+}
+table td,th,tr {
+	white-space: nowrap;
+}
+a, b {
+	color:#195695;
+}
+.mutdisc {
+	width: 200px;
+	height:	200px;
+}
+tr {
+    vertical-align: top;
+}
+span.courier {
+    font-family: courier, 'Courier New', monospace;
+}
+div.center {
+    text-align: center;
+}
+.warning {
+	background-color: #FF6666;
+}
+.right {
+	text-align:right;
+}
+.left {
+	text-align:left;
+}
+.center,b {
+	text-align:center;
+}
+td.locks {
+	text-align:left;
+}
+.lock {
+	width:16px;
+	height:16px;
+	  /* for IE */
+	  filter:alpha(opacity=50);
+	  /* CSS3 standard */
+	  opacity:0.5;
+	  position: relative;
+}
+.lock:hover, .locked {
+	width:16px;
+	height:16px;
+	position:relative;
+	  /* for IE */
+	  filter:alpha(opacity=100);
+	  /* CSS3 standard */
+	  opacity:1.0;
+}
+#pdbhint {
+	padding:10px;
+	font-size:smaller;
+	overflow:auto;
+}
+#closewin {
+	position:absolute;
+	right: 5px;
+	width: 15px;
+	height: 18px;
+}
+div.jmolwindow {
+	width:400px;
+	border:1px solid #DDD;
+}
+.rootdiv {
+	visibility:hidden;
+	background:white;
+	position:absolute;
+	height:280px;
+	width:200px;
+	z-index:1000;	
+	border:1px solid #DDD;
+	-moz-border-radius-topleft: 6px;
+	-moz-border-radius-topright:6px;
+	-moz-border-radius-bottomleft:6px;
+	-moz-border-radius-bottomright:6px;
+	-webkit-border-top-left-radius:6px;
+	-webkit-border-top-right-radius:6px;
+	-webkit-border-bottom-left-radius:6px;
+	-webkit-border-bottom-right-radius:6px;
+	border-top-left-radius:6px;
+	border-top-right-radius:6px;
+	border-bottom-left-radius:6px;
+	border-bottom-right-radius:6px;
+}
+.handle {
+	font-family: arial, sans-serif;
+	font-weight: bold;
+	font-size:smaller;
+	margin:auto;
+	padding:4px;
+	width: 96%;
+	background-color: #A0BBB2;
+	-moz-border-radius-topleft: 6px;
+	-moz-border-radius-topright:6px;
+	-webkit-border-top-left-radius:6px;
+	-webkit-border-top-right-radius:6px;
+	border-top-left-radius:6px;
+	border-top-right-radius:6px;
+}
+/*
+	TableCloth
+	by Alen Grakalic, brought to you by cssglobe.com
+*/
+table, td{
+	font:100% Arial, Helvetica, sans-serif;
+}
+table{width:100%;border-collapse:collapse;}
+th, td{text-align:center;padding:.3em;border:1px solid #fff;}
+th{background:#BFC9C6;}
+td{background:#fff;}
+/* tablecloth styles */
+//tr.even td{background:#fff;}
+//tr.odd td{background:#fff;}
+//
+//th.over, tr.even th.over, tr.odd th.over{background:#C7C1C1;}
+//th.down, tr.even th.down, tr.odd th.down{background:#C7C1C1;}
+//th.selected, tr.even th.selected, tr.odd th.selected{}
+
+td.over, tr.even td.over, tr.odd td.over{background:#C5CECB;}
+td.down, tr.even td.down, tr.odd td.down{background:#C5CECB;color:#fff;}
+td.selected, tr.even td.selected, tr.odd td.selected{background:#A0BBB2;color:#555;}
+
+/* use this if you want to apply different styleing to empty table cells*/
+td.empty, tr.odd td.empty, tr.even td.empty{background:#fff;}
+/* tablecloth*/
+
+table.results td,  table.results img{
+	text-align:left;
+	margin-left: 0px;
+	margin-right: auto;
+	padding: 2px;
+}
+table.checklock td {
+	padding: 0px;
+}
+.checkboxes td {
+	padding:0px;
+	vertical-align: bottom;
+}
+#jmtd {
+	width: 410px;
+}
+#cbtd {
+	width: 250px;
+	text-align:left;
+	margin-left: 0px;
+	margin-right: auto;
+	padding: 2px;
+}

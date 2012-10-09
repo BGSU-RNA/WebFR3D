@@ -1,0 +1,9 @@
+
+
+function [D] = zKeepZeros(D,E)
+
+[i,j,d] = find(D);
+[p,q]   = find(E);
+[c,k]   = setdiff([i j], [p q], 'rows');
+D       = sparse(i(k),j(k),d(k));
+

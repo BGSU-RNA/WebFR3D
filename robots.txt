@@ -1,0 +1,4 @@
+Sitemap: http://rna.bgsu.eduwebfr3d/sitemap.xml
+
+User-agent: *
+Disallow:
