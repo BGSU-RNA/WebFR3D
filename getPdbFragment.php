@@ -15,10 +15,10 @@ for ($i = 0; $i <= count($b); $i++) {
 $expr = '/^\s*(' . str_replace(',', '|', $nts) . ')\s*$/';
 
 $filename = 'temp/' . uniqid() . ".pdb";
-$myFile = '/Servers/rna.bgsu.edu/WebFR3D/' . $filename;
+$myFile = '/Servers/rna.bgsu.edu/webfred/' . $filename;
 $fh = fopen($myFile, 'w') or die("can't open file");
 
-$handle = @fopen('./FR3D/PDBFiles/' . $pdb . '.pdb', "r");
+$handle = @fopen('./FR3D_submodule/PDBFiles/' . $pdb . '.pdb', "r");
 if ($handle) {
     while (($line = fgets($handle, 4096)) !== false) {
 		$pos = strpos($line, 'ATOM');
@@ -37,6 +37,6 @@ if ($handle) {
 }
 fclose($fh);
 
-echo 'http://rna.bgsu.edu/WebFR3D/' . $filename;
+echo 'http://rna.bgsu.edu/webfred/' . $filename;
 
 ?>

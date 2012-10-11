@@ -1,9 +1,9 @@
 <?php
 error_reporting(E_ALL);
-$root = '/Servers/rna.bgsu.edu/WebFR3D';
-$url  = 'http://rna.bgsu.edu/WebFR3D';
+$root = '/Servers/rna.bgsu.edu/webfred';
+$url  = 'http://rna.bgsu.edu/webfred';
 $uid = uniqid();
-$path = "$root/Results/{$uid}"; 
+$path = "$root/Results/{$uid}";
 mkdir($path);
 chmod($path,0777);
 
@@ -31,14 +31,14 @@ elseif ( isset( $_POST["rnao"] ) ) {
 }
 
 function createGeometricQueryFile($_POST, $id, $root)
-{	
+{
     $FileName = "$root/InputScript/Input/Query_{$id}.m";
     $fh = fopen($FileName, 'w') or die("Can't open Query file");
-    fwrite($fh, "Query.Filename = '{$_POST["PDBquery"]}';\n");    	
+    fwrite($fh, "Query.Filename = '{$_POST["PDBquery"]}';\n");
     if ( $_POST["mail"] != '')
     {
-    	fwrite($fh, "Query.Email = '{$_POST["mail"]}';\n"); 
-    }	
+    	fwrite($fh, "Query.Email = '{$_POST["mail"]}';\n");
+    }
 
 //    fwrite($fh, "NTList = '{$_POST["nucleotides"]}';\n");
 	$nts = explode(',',$_POST["nucleotides"]);
@@ -48,10 +48,10 @@ function createGeometricQueryFile($_POST, $id, $root)
     {
     	$chain = $_POST["chain_$i"];
     	$command = 'Query.ChainList{' . ($i + 1) . '}=' . "'$chain';\n";
-	    fwrite($fh, $command);	    
-		$nts_matlab .= 	$nts[$i] . '_' . $chain . ',';		
-    }        
-	$nts_matlab = substr($nts_matlab,0,-1);    
+	    fwrite($fh, $command);
+		$nts_matlab .= 	$nts[$i] . '_' . $chain . ',';
+    }
+	$nts_matlab = substr($nts_matlab,0,-1);
     fwrite($fh, "NTList = '$nts_matlab';\n");
 
     fwrite($fh, "Query.DiscCutoff = {$_POST["disc"]};\n");
@@ -65,71 +65,73 @@ function createGeometricQueryFile($_POST, $id, $root)
     for ($i = 0; $i < $numpdb; $i++)
     {
         $ii = $i+1;
-        fwrite($fh, "Query.SearchFiles{{$ii}} = '{$_POST["wheretosearch"][$i]}';\n");           
-    }        
+        fwrite($fh, "Query.SearchFiles{{$ii}} = '{$_POST["wheretosearch"][$i]}';\n");
+    }
 
     fwrite($fh, "[File,QIndex] = zAddNTData(Query.Filename);\n");
     fwrite($fh, "[Indices,Ch] = zIndexLookup(File(QIndex),NTList);\n");
     fwrite($fh, "Query.NumNT = length(Indices);\n");
-    
+
 //    fwrite($fh, "for i=1:Query.NumNT,");
 //    fwrite($fh, "        Query.ChainList{i}=Ch{1,i}{1};");
 //    fwrite($fh, "end \n");
-    
+
     fwrite($fh, "for i=1:min(25,length(Indices)),");
     fwrite($fh, "    Query.NTList{i} =File(QIndex).NT(Indices(i)).Number;");
     fwrite($fh, "    Query.NT(i) = File(QIndex).NT(Indices(i));");
     fwrite($fh, "end\n");
-    
+
     $numnt = sqrt(count($_POST['mat']));
     $mat = array_chunk($_POST['mat'],sqrt(count($_POST['mat'])));
     for ($i = 0; $i < $numnt; $i++)
     {
         for ($j = 0; $j < $numnt; $j++)
         {
-            $ii = $i+1; $jj = $j+1;        
+            $ii = $i+1; $jj = $j+1;
 //            if ($i > $j)
 //            {
-//                fwrite($fh, "Query.Edges{"."$ii,$jj"."} ='{$mat[$i][$j]}';\n");                        
+//                fwrite($fh, "Query.Edges{"."$ii,$jj"."} ='{$mat[$i][$j]}';\n");
 //            }
 //            elseif ($i < $j)
 //            {
-//                fwrite($fh, "Query.Diff{"."$ii".","."$jj"."} ='{$mat[$i][$j]}';\n");     
-//            }                    
+//                fwrite($fh, "Query.Diff{"."$ii".","."$jj"."} ='{$mat[$i][$j]}';\n");
+//            }
 //            else
             if ($i == $j)
             {
                 fwrite($fh, "Query.Diagonal{"."$ii"."} ='{$mat[$i][$j]}';\n");
             }
-        }    
+        }
     }
 
     for ($i = 0; $i < $numnt; $i++)
     {
         for ($j = 0; $j <= ($i-1); $j++)
         {
-            $ii = $i+1; $jj = $j+1;                    
-            fwrite($fh, "Query.Diff{"."$ii".","."$jj"."} ='{$mat[$i][$j]}';\n");     
+            $ii = $i+1; $jj = $j+1;
+            fwrite($fh, "Query.Diff{"."$ii".","."$jj"."} ='{$mat[$i][$j]}';\n");
         }
-    }    
-    
+    }
+
+
     for ($i = 0; $i < $numnt; $i++)
     {
         for ($j = ($i+1); $j < $numnt; $j++)
         {
-            $ii = $i+1; $jj = $j+1;                    
-            fwrite($fh, "Query.Edges{"."$ii".","."$jj"."} ='{$mat[$i][$j]}';\n");     
+            $ii = $i+1; $jj = $j+1;
+            fwrite($fh, "Query.Edges{"."$ii".","."$jj"."} ='{$mat[$i][$j]}';\n");
         }
-    }    
+    }
 
-//    fwrite($fh, "try,");    
+
+//    fwrite($fh, "try,");
 //    fwrite($fh, "xFR3DSearch;\n");
-    fwrite($fh, "tic;aWebFR3DSearch;\n");    
+    fwrite($fh, "tic;aWebFR3DSearch;\n");
     fwrite($fh, "aWriteHTMLForSearch('{$id}');toc;");
 //	fwrite($fh, "catch ME, movefile('$root/InputScript/Input/Query_{$id}.m','$root/InputScript/Failed');");
 //	fwrite($fh, "disp('An error occured while processing the query');return;end");
     fclose($fh);
-    
+
     //$command = '/Applications/Octave.app/Contents/Resources/bin/octave -q --braindead ~/Sites/OnlineFR3D/            Query.oct 2>&1';
     //$response = shell_exec($command);
     //echo "<pre>$response</pre>\n";
@@ -140,28 +142,28 @@ function createSymbolicQueryFile($_POST, $id, $root)
     error_reporting(E_ALL);
     $FileName = "$root/InputScript/Input/Query_{$id}.m";
     $fh = fopen($FileName, 'w') or die("Can't open Query file");
-    
+
     fwrite($fh, "Query.Name = '{$id}';\n");
     fwrite($fh, "Query.Geometric = 0;\n");
-    fwrite($fh, "Query.ExcludeOverlap = 1;\n");    
-    fwrite($fh, "Query.NumNT = '{$_POST["NT"][0]}';\n");    
+    fwrite($fh, "Query.ExcludeOverlap = 1;\n");
+    fwrite($fh, "Query.NumNT = '{$_POST["NT"][0]}';\n");
     if ( $_POST["mail"] != '')
     {
-    	fwrite($fh, "Query.Email = '{$_POST["mail"]}';\n"); 
-    }	
+    	fwrite($fh, "Query.Email = '{$_POST["mail"]}';\n");
+    }
 
 //    if ( $_POST["wheretosearch"][0] == 'Reduced redundancy dataset' )
 //    {
-//    	fwrite($fh, "Query.SearchFiles{{$i}} = 'Non_redundant_list_2_8_08.txt';\n");      
+//    	fwrite($fh, "Query.SearchFiles{{$i}} = 'Non_redundant_list_2_8_08.txt';\n");
 //    	$FileName = "Non_redundant_list_2_8_08.txt";
-//    	$nr = fopen($FileName, 'r') or die("Can't open non-redundant list");	
+//    	$nr = fopen($FileName, 'r') or die("Can't open non-redundant list");
 //    	$nr_list = fread($nr,filesize($FileName));
 //    	$pdblist = split("@", $nr_list);
 //    	for ($i = 1; $i < count($pdblist)-1; $i++)
 //    	{
-//	        fwrite($fh, "Query.SearchFiles{{$i}} = '{$pdblist[$i]}';\n");      
-//    	} 
-//    }   
+//	        fwrite($fh, "Query.SearchFiles{{$i}} = '{$pdblist[$i]}';\n");
+//    	}
+//    }
 //    else
 //    {
 	    $numpdb = count($_POST['wheretosearch']);
@@ -169,54 +171,56 @@ function createSymbolicQueryFile($_POST, $id, $root)
 	    for ($i = 0; $i < $numpdb; $i++)
 	    {
 	        $ii = $i+1;
-	        fwrite($fh, "Query.SearchFiles{{$ii}} = '{$_POST["wheretosearch"][$i]}';\n");           
-	    }        
-//    } 
-    
+	        fwrite($fh, "Query.SearchFiles{{$ii}} = '{$_POST["wheretosearch"][$i]}';\n");
+	    }
+//    }
+
     $numnt = sqrt(count($_POST['mat']));
     $mat = array_chunk($_POST['mat'],sqrt(count($_POST['mat'])));
     for ($i = 0; $i < $numnt; $i++)
     {
         for ($j = 0; $j < $numnt; $j++)
         {
-            $ii = $i+1; $jj = $j+1;        
+            $ii = $i+1; $jj = $j+1;
             if ($i == $j)
             {
                 fwrite($fh, "Query.Diagonal{"."$ii"."} ='{$mat[$i][$j]}';\n");
             }
-        }    
+        }
     }
 
     for ($i = 0; $i < $numnt; $i++)
     {
         for ($j = 0; $j <= ($i-1); $j++)
         {
-            $ii = $i+1; $jj = $j+1;                    
-            fwrite($fh, "Query.Diff{"."$ii".","."$jj"."} ='{$mat[$i][$j]}';\n");     
+            $ii = $i+1; $jj = $j+1;
+            fwrite($fh, "Query.Diff{"."$ii".","."$jj"."} ='{$mat[$i][$j]}';\n");
         }
-    }    
-    
+    }
+
+
     for ($i = 0; $i < $numnt; $i++)
     {
         for ($j = ($i+1); $j < $numnt; $j++)
         {
-            $ii = $i+1; $jj = $j+1;                    
-            fwrite($fh, "Query.Edges{"."$ii".","."$jj"."} ='{$mat[$i][$j]}';\n");     
+            $ii = $i+1; $jj = $j+1;
+            fwrite($fh, "Query.Edges{"."$ii".","."$jj"."} ='{$mat[$i][$j]}';\n");
         }
-    }    
-    
-//    fwrite($fh, "try,");    
+    }
+
+
+//    fwrite($fh, "try,");
 //    fwrite($fh, "xFR3DSearch;\n");
-    fwrite($fh, "tic;aWebFR3DSearch;\n");    
+    fwrite($fh, "tic;aWebFR3DSearch;\n");
 
     fwrite($fh, "aWriteHTMLForSearch('{$id}');toc;");
 //	fwrite($fh, "catch ME, movefile('$root/InputScript/Input/Query_{$id}.m','$root/OnlineFR3D/InputScript/Failed');");
 //	fwrite($fh, "disp('An error occured while processing the query');return;end");
     fclose($fh);
-    
+
 }
 
-function createRNAOQueryFile($_POST, $uid, $root) 
+function createRNAOQueryFile($_POST, $uid, $root)
 {
     $FileName = "$root/InputScript/Input/Qrnao_{$uid}.m";
     $fh = fopen($FileName, 'w') or die("Can't open Query file");
@@ -228,17 +232,17 @@ function createRNAOQueryFile($_POST, $uid, $root)
     fwrite($fh, "Query.SearchFiles = cell(1,$numpdb);\n");
     fwrite($fh, "Query.Name = '{$uid}';\n");
     fwrite($fh, "Query.Geometric = 0;\n");
-    fwrite($fh, "Query.ExcludeOverlap = 1;\n");        
+    fwrite($fh, "Query.ExcludeOverlap = 1;\n");
     for ($i = 0; $i < $numpdb; $i++)
     {
         $ii = $i+1;
-        fwrite($fh, "Query.SearchFiles{{$ii}} = '{$_POST["wheretosearch"][$i]}';\n");           
-    }        
+        fwrite($fh, "Query.SearchFiles{{$ii}} = '{$_POST["wheretosearch"][$i]}';\n");
+    }
     if ( $_POST["mail"] != '')
     {
-    	fwrite($fh, "Query.Email = '{$_POST["mail"]}';\n"); 
-    }	    
-    fclose($fh);   
+    	fwrite($fh, "Query.Email = '{$_POST["mail"]}';\n");
+    }
+    fclose($fh);
 }
 
 function createPlaceHolder($id, $root)
@@ -252,9 +256,9 @@ function createPlaceHolder($id, $root)
     <head>
     <meta http-equiv="refresh" content="10" >
     <title>FR3D results</title>
-   	<link rel="stylesheet" media="all" type="text/css" href="http://rna.bgsu.edu/WebFR3D/Library.css" />	     
+   	<link rel="stylesheet" media="all" type="text/css" href="http://rna.bgsu.edu/WebFR3D/Library.css" />
     </head>
-    
+
     <body>
 	<div class="message">
     <h2>Thank you for using FR3D.</h2><br>
@@ -262,11 +266,11 @@ function createPlaceHolder($id, $root)
     You can bookmark this page and return later to check your results.</p><br><br>
 
     This page will automatically refresh every 10 seconds until the results become available.<br><br>
-    
+
     </div>
     </body>
     </html>';
-    
+
     fwrite($fh,$htmlcode);
 }
-?>    
+?>

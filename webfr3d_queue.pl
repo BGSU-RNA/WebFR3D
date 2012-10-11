@@ -21,6 +21,7 @@ my $IDLE_QUEUE = Thread::Queue->new();
 
 # WebFR3D InputScript directory
 my $WEBFR3D = '/Servers/rna.bgsu.edu/webfred';
+my $WEBFR3D_matlab = '/Servers/rna.bgsu.edu/webfred/matlab';
 my $INPUT_DIR = '/Servers/rna.bgsu.edu/webfred/InputScript/Input';
 my $RUN_DIR = '/Servers/rna.bgsu.edu/webfred/InputScript/Running';
 my $MATLAB = '/Applications/MATLAB_R2007b/bin/matlab -nojvm -nodisplay -r ';
@@ -88,7 +89,7 @@ MAIN:
             $job = $parts[-1];
             my $command = 'mv ' . $INPUT_DIR . '/' . $job . ' ' . $RUN_DIR  . '/' . $job;
             system($command);
-            $command = $MATLAB . '"addpath(' . "'" . $WEBFR3D . "')" . ';aWebFR3D(' . "'" . $job . "')" . '"';
+            $command = $MATLAB . '"addpath(' . "'" . $WEBFR3D_matlab . "')" . ';aWebFR3D(' . "'" . $job . "')" . '"';
             my $work = "ulimit -t $TIMEOUT;$command;perl $WEBFR3D" . '/' . "check_results.pl $job";
             $work_queues{$tid}->enqueue($work);
         }
