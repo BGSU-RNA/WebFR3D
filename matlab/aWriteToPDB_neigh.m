@@ -1,6 +1,6 @@
 function [] = aWriteToPDB_neigh(Search, LibName)
 
-pdbdatabase = '/Servers/rna.bgsu.edu/webfred/Results/PDBDatabase';
+get_config;
 
 %------------------------inline xWriteCandidatePDB begins
 File = Search.File;
@@ -40,20 +40,20 @@ if ~isempty(Search.Candidates)
     Model = File(f).NT(Search.Candidates(1,1:N));  % first cand, taken as model
 
     a = 1;                                         % atom number
-    if~(exist(pdbdatabase,'dir')),
-        mkdir(pdbdatabase);
+    if~(exist(config.pdbdatabase,'dir')),
+        mkdir(config.pdbdatabase);
     end
     for c = 1:M,                                   % loop through candidates
         f     = Search.Candidates(c,N+1);             % file number, this candidate
         Cand  = File(f).NT(Search.Candidates(c,1:N)); % current candidate
         [R,Sh] = xSuperimposeCandidates(Model,Cand,LW,AW);
 
-        if~(exist([pdbdatabase filesep LibName],'dir')),
-            mkdir([pdbdatabase filesep LibName]);
+        if~(exist([config.pdbdatabase filesep LibName],'dir')),
+            mkdir([config.pdbdatabase filesep LibName]);
         end
 
         ID  = strcat(Search.Query.Name,'_',num2str(c));
-        fid = fopen([pdbdatabase filesep LibName filesep ID '.pdb'],'W');       % open for writing
+        fid = fopen([config.pdbdatabase filesep LibName filesep ID '.pdb'],'W');       % open for writing
         a = 1;                                         % atom number
         VP.Sugar = 1;
         fprintf(fid,'MODEL        1\n');

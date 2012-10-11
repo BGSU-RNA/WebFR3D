@@ -1,40 +1,36 @@
 function [] = aWebFR3D(query)
 
-fr3d = '/Servers/rna.bgsu.edu/webfred/FR3D_submodule';
-webfr3d = '/Servers/rna.bgsu.edu/webfred';
-webfr3d_matlab = '/Servers/rna.bgsu.edu/webfred/matlab';
-cd(fr3d);
-result = '/Servers/rna.bgsu.edu/webfred/Results';
-failed = '/Servers/rna.bgsu.edu/webfred/InputScript/Failed';
-mydir = '/Servers/rna.bgsu.edu/webfred/InputScript/Running';
-addpath(webfr3d_matlab);
-addpath([fr3d filesep 'FR3DSource']);
-addpath([fr3d filesep 'PDBFiles']);
-addpath([fr3d filesep 'PrecomputedData']);
+% read in configuration file
+get_config;
+cd(config.fr3d);
+addpath(config.webfr3d_mcode);
+addpath([config.fr3d filesep 'FR3DSource']);
+addpath([config.fr3d filesep 'PDBFiles']);
+addpath([config.fr3d filesep 'PrecomputedData']);
 
 id = query(7:end-2);
-destination = [result filesep id];
+destination = [config.results filesep id];
 if ~exist(destination,'dir')
     mkdir(destination);
 end
-fidi = fopen([mydir filesep query],'r');
+fidi = fopen([config.running filesep query],'r');
 Query = [];
 if strfind(query,'rnao')
 
     try
-        Query = xReadRNAOQuery([mydir filesep query]);
+        Query = xReadRNAOQuery([config.running filesep query]);
     catch
         message = 'Parsing failed. Check your syntax.';
-        reportMistake(result,id,message,Query);
-        movefile([mydir filesep query], [failed filesep query]);
+        reportMistake(config.running,id,message,Query);
+        movefile([config.running filesep query], [config.failed filesep query]);
         quit;
     end
     try
         aWebFR3DSearch;
     catch
         message = 'Problem during FR3D search.';
-        reportMistake(result,id,message,Query);
-        movefile([mydir filesep query], [failed filesep query]);
+        reportMistake(config.running,id,message,Query);
+        movefile([config.running filesep query], [config.failed filesep query]);
         quit;
     end
     if isfield(Search,'Candidates') && ~isempty(Search.Candidates)
@@ -44,20 +40,20 @@ if strfind(query,'rnao')
                 aWriteHTMLForSearch(id);
             else
                 message = ['Too many candidates (' int2str(r(1)) ')'];
-                reportMistake(result,id,message,Query);
-                movefile([mydir filesep query], [result filesep id filesep query]);
+                reportMistake(config.running,id,message,Query);
+                movefile([config.running filesep query], [config.running filesep id filesep query]);
                 quit;
             end
         catch
             message = 'Problem creating the webpage';
-            reportMistake(result,id,message,Query);
-            movefile([mydir filesep query], [failed filesep query]);
+            reportMistake(config.running,id,message,Query);
+            movefile([config.running filesep query], [config.failed filesep query]);
             quit;
         end
     else
         message = 'No candidates found';
-        reportMistake(result,id,message,Query);
-        movefile([mydir filesep query], [result filesep id filesep query]);
+        reportMistake(config.running,id,message,Query);
+        movefile([config.running filesep query], [config.running filesep id filesep query]);
         quit;
     end
 else
@@ -70,9 +66,9 @@ else
         catch
             fprintf('Problem with line: %s\n',tline);
             message = 'Critical error. Execution aborted.';
-            reportMistake(result,id,message,Query);
+            reportMistake(config.running,id,message,Query);
             try
-                movefile([mydir filesep query], [failed filesep query]);
+                movefile([config.running filesep query], [config.failed filesep query]);
             catch
 
             end
@@ -82,7 +78,7 @@ else
     fclose(fidi);
 end
 try
-    movefile([mydir filesep query], [result filesep id filesep query]);
+    movefile([config.running filesep query], [config.results filesep id filesep query]);
 catch
 
 end
@@ -93,21 +89,19 @@ end
 
 function reportMistake(result,id,message,Query)
 
-    webroot = 'http://rna.bgsu.edu/WebFR3D';
+    get_config;
     disp(message);
-    fid = fopen([result filesep id filesep 'results.php'],'w');
-%     fprintf(fid, '<html><head><title>FR3D
-%     results</title></head><body>\n');
-    fprintf(fid, '<html><head><link rel="stylesheet" type="text/css" href="%s/Library.css"><title>FR3D results</title></head><body>',webroot);
+    fid = fopen([config.running filesep id filesep 'results.php'],'w');
+    fprintf(fid, '<html><head><link rel="stylesheet" type="text/css" href="%s/Library.css"><title>FR3D results</title></head><body>',config.css);
     fprintf(fid, '<div class="message">\n');
     fprintf(fid, '<h2>Thank you for using FR3D</h2><br>\n');
     fprintf(fid, '<p>%s</p><br><br>\n',message);
     fprintf(fid, '</div></body></html>');
     fclose(fid);
     if isfield(Query, 'Email')
-        link = sprintf('%s/Results/%s/results.php', webroot, id);
-        message = sprintf('Please visit this webpage to see your FR3D results: %s  This is an automated message. For support email apetrov@bgsu.edu', link);
-        command = sprintf('echo "%s" | tee foo | mail -s "FR3D results %s" %s', message, id, Query.Email);
+        link = sprintf('%s/%s/results.php', config.web_results, id);
+        message = sprintf('Please visit this webpage to see your FR3D results: %s  This is an automated message. For support email %s', link, config.email);
+        command = sprintf('echo "%s" | tee foo | mail -s "FR3D results %s" %s', message, id, config.email);
         unix(command);
         clear Query.Email;
     end

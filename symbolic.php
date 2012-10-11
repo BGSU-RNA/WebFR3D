@@ -2,21 +2,21 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
     <title>Symbolic FR3D</title>
-    <script src="symbolic.js" type="text/javascript"></script>
+    <script src="./js/symbolic.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="./css/FR3D.css">
    	<link rel="stylesheet" media="all" type="text/css" href="./css/menu_style.css">
     <meta name="description" content="Symbolic search for RNA 3D motifs in PDB files">
     <meta name="keywords" content="WebFR3D,RNA,3D motifs,symbolic search">
-    <?php include 'functions.php'; google_analytics();?>
+    <?php include 'php/functions.php'; google_analytics();?>
 	<!--greybox-->
 	<script type="text/javascript">
-	    var GB_ROOT_DIR = "http://rna.bgsu.edu/webfr3d/greybox/";
+	    var GB_ROOT_DIR = "http://rna.bgsu.edu/webfred/js/greybox/";
 	</script>
-	<script type="text/javascript" src="greybox/AJS.js"></script>
-	<script type="text/javascript" src="greybox/AJS_fx.js"></script>
-	<script type="text/javascript" src="greybox/gb_scripts.js"></script>
-	<link href="greybox/gb_styles.css" rel="stylesheet" type="text/css">
-	<!--greybox-->    
+	<script type="text/javascript" src="./js/greybox/AJS.js"></script>
+	<script type="text/javascript" src="./js/greybox/AJS_fx.js"></script>
+	<script type="text/javascript" src="./js/greybox/gb_scripts.js"></script>
+	<link href="./js/greybox/gb_styles.css" rel="stylesheet" type="text/css">
+	<!--greybox-->
 </head>
 
 <body>
@@ -43,12 +43,12 @@
 		<ul>
 			<li><a href="http://goo.gl/2vENT" target="_blank">In a new window</a></li>
 		</ul>
-	</li>		
+	</li>
 	</ul>
 </div>
 <noscript>Your browser does not support JavaScript. Please turn it on or update your browser</noscript>
 
-<form action="Search.php" name="main" method="post" onSubmit="return Check(this.form)" id="mainform">
+<form action="php/Search.php" name="main" method="post" onSubmit="return Check(this.form)" id="mainform">
 <input class='hidden' type='text' value='symbolic' name='symbolic'>
 <div class='select left_side'>
 	<div class='handle'>Structures to search</div>

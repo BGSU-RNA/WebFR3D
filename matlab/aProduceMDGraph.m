@@ -1,6 +1,7 @@
 function [] = aProduceMDGraph (Search, MotifNumber)
 
-pictures = '/Servers/rna.bgsu.edu/webfred/Results/Pictures';
+% read in configuration file
+get_config;
 
 if length(Search.Candidates(:,1)) > 1,
     [L,N] = size(Search.Candidates);
@@ -25,11 +26,11 @@ if length(Search.Candidates(:,1)) > 1,
     end
 
     Search = xMutualDiscrepancy(File,Search,300); % calculate some discrepancies
-    if ~exist ([pictures filesep MotifNumber],'dir'),
-          mkdir([pictures filesep MotifNumber]);
+    if ~exist ([config.pictures filesep MotifNumber],'dir'),
+          mkdir([config.pictures filesep MotifNumber]);
     end
 
-    myPath = fullfile(pictures, MotifNumber, [MotifNumber '.png']);
+    myPath = fullfile(config.pictures, MotifNumber, [MotifNumber '.png']);
     Done   = find(Search.DiscComputed);            % ones already computed
 
     Lab = cell(1,L);
@@ -71,8 +72,6 @@ if length(Search.Candidates(:,1)) > 1,
     colormap(map);
     caxis([0 0.8]);
     colorbar('location','eastoutside');
-
-%     keyboard;
 
     set(gcf,'Renderer','painters');
     try

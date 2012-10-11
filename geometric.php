@@ -2,23 +2,23 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
     <title>Geometric FR3D</title>
-    <script src="geometric.js" type="text/javascript"></script>
+    <script src="./js/geometric.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="./css/FR3D.css" >
 	<link rel="stylesheet" media="all" type="text/css" href="./css/menu_style.css" >
     <meta name="description" content="Geometric search for RNA 3D motifs in PDB files.Geometric queries of PDB files.Online version of FR3D.WebFR3D." >
     <meta name="keywords" content="WebFR3D,RNA,3D motifs,geometric search,RNA 3D structure,PDB" >
 	<!--greybox-->
 	<script type="text/javascript">
-	    var GB_ROOT_DIR = "http://rna.bgsu.edu/webfr3d/greybox/";
+	    var GB_ROOT_DIR = "http://rna.bgsu.edu/webfred/js/greybox/";
 	</script>
-	<script type="text/javascript" src="greybox/AJS.js"></script>
-	<script type="text/javascript" src="greybox/AJS_fx.js"></script>
-	<script type="text/javascript" src="greybox/gb_scripts.js"></script>
-	<link href="greybox/gb_styles.css" rel="stylesheet" type="text/css" >
+	<script type="text/javascript" src="./js/greybox/AJS.js"></script>
+	<script type="text/javascript" src="./js/greybox/AJS_fx.js"></script>
+	<script type="text/javascript" src="./js/greybox/gb_scripts.js"></script>
+	<link href="./js/greybox/gb_styles.css" rel="stylesheet" type="text/css" >
 	<!--greybox-->
 	<script src='http://rna.bgsu.edu/jmol/Jmol.js' type='text/javascript'></script>
-	<script type="text/javascript" src="dom-drag.js"></script><!--http://www.dynamicdrive.com/dynamicindex11/domdrag/-->
-	<?php include 'functions.php'; google_analytics(); ?>
+	<script type="text/javascript" src="./js/dom-drag.js"></script>
+	<?php include 'php/functions.php'; google_analytics(); ?>
 </head>
 
 <body onLoad='SetUp();'>
@@ -38,7 +38,7 @@
 			<li><a onclick="SarcinTemplate()">Sarcin-ricin Internal Loop</a></li>
 			<li><a onclick="TLoopTemplate()">T-loop Hairpin</a></li>
 			<li><a onclick="Kt7Template()">Kink-turn 7</a></li>
-			<li><a onclick="CLoopTemplate()">C-loop</a></li>			
+			<li><a onclick="CLoopTemplate()">C-loop</a></li>
 		</ul>
 	</li>
 	<li><a>Help</a>
@@ -49,7 +49,7 @@
 	</ul>
 </div>
 
-<form action="Search.php" name="main" method="post" onSubmit="return Check(this.form)" id="mainform">
+<form action="php/Search.php" name="main" method="post" onSubmit="return Check(this.form)" id="mainform">
 	<input class='hidden' type='text' value='geometric' name='geometric'>
 
 	<div class='select left_side'>
@@ -83,7 +83,7 @@
 </form>
 
 <div id="root" class='rootdiv' style="left:220px; top:100px;">
-	<div id="handle" class='handle'>Drag<img src="./greybox/w_close.gif" alt="Close" id='closewin' onClick='HideJmolDiv()'></div>
+	<div id="handle" class='handle'>Drag<img src="./js/greybox/w_close.gif" alt="Close" id='closewin' onClick='HideJmolDiv()'></div>
 	<div id='jmol' class='content'></div>
 </div>
 <script type="text/javascript" language="javascript">

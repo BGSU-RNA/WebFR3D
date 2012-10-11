@@ -19,17 +19,19 @@ my $TERM :shared = 0;
 # Also, when app terminates a -1 is added to this queue
 my $IDLE_QUEUE = Thread::Queue->new();
 
-# WebFR3D InputScript directory
+# set WebFR3D location
 my $WEBFR3D = '/Servers/rna.bgsu.edu/webfred';
-my $WEBFR3D_matlab = '/Servers/rna.bgsu.edu/webfred/matlab';
-my $INPUT_DIR = '/Servers/rna.bgsu.edu/webfred/InputScript/Input';
-my $RUN_DIR = '/Servers/rna.bgsu.edu/webfred/InputScript/Running';
-my $MATLAB = '/Applications/MATLAB_R2007b/bin/matlab -nojvm -nodisplay -r ';
-my $RESULTS = '/Servers/rna.bgsu.edu/webfred/Results';
 
 # CPU time out for each query in seconds
 my $TIMEOUT = 1800;
 #my $TIMEOUT = 1;
+
+my $WEBFR3D_matlab = $WEBFR3D . '/matlab';
+my $RESULTS        = $WEBFR3D . '/Results';
+my $INPUT_DIR      = $WEBFR3D . '/InputScript/Input';
+my $RUN_DIR        = $WEBFR3D . '/InputScript/Running';
+my $MATLAB         = '/Applications/MATLAB_R2007b/bin/matlab -nojvm -nodisplay -r ';
+
 
 ### Signal Handling ###
 

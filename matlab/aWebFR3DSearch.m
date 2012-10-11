@@ -19,7 +19,10 @@
                                 % of the file in which the candidate was found
 %    .Discrepancy               % geometric discrepancy of each candidate
                                 % from the query, for geometric searches
-webroot = '/Servers/rna.bgsu.edu/webfred';
+
+% read in WebFR3D config file
+get_config;
+
 if ~exist('Verbose'),
   Verbose = 1;                               % default is to print output
 end
@@ -235,7 +238,6 @@ if ~isempty(Candidates),                         % some candidate(s) found
       mkdir('SearchSaveFiles');
     end
 
-%     save(['SearchSaveFiles' filesep Search.SaveName], 'Search');
  end
 % ------------------------------------------------ Display results
 
@@ -244,20 +246,18 @@ if ~isempty(Candidates),                         % some candidate(s) found
  end
 
  if (~exist('GUIactive')) && ~exist('UsingLibrary'),
-%    xListCandidates(Search,Inf,1);
-   %Search = xDisplayCandidates(File(SIndex),Search);
-   if (~exist([webroot '/Results'],'dir')),
-        mkdir([webroot '/Results']);
+   if (~exist(config.results,'dir')),
+        mkdir(config.results);
    end
-%    mkdir(['/Users/apetrov/Sites/OnlineFR3D/Results' filesep Query.Name]);
-   save([webroot '/Results' filesep Query.Name filesep Query.Name '.mat'], 'Search');
+
+   save( fullfile(config.results, Query.Name, [Query.Name '.mat']), 'Search');
  end
 
 else
    Search.Candidates = [];
    Search.Query = Query;
 
-   save([webroot '/Results' filesep Query.Name filesep Query.Name '.mat'], 'Search');
+   save( fullfile(config.results, Query.Name, [Query.Name '.mat']), 'Search');
 end
 
 end

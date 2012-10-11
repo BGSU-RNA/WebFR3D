@@ -4,38 +4,38 @@
     <title>FR3D RNAO</title>
     <script src="./rnao.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="./css/FR3D.css" >
-   	<link rel="stylesheet" media="all" type="text/css" href="./css/menu_style.css" />	
+   	<link rel="stylesheet" media="all" type="text/css" href="./css/menu_style.css" />
     <meta name="description" content="Search for RNA 3D motifs in PDB files with RNAO terms" />
-    <meta name="keywords" content="WebFR3D,RNA,3D motifs,search,RNAO,ontology" />   	
-    <?php include 'functions.php'; google_analytics();
-     ?>       	                
+    <meta name="keywords" content="WebFR3D,RNA,3D motifs,search,RNAO,ontology" />
+    <?php include 'php/functions.php'; google_analytics();
+     ?>
 </head>
 
-<body>    
+<body>
 
 <div class="menu">
 	<ul>
 	<li><a href="./index.html">WebFR3D</a></li>
-	<li><a href="./rnao.php">RNAO Search</a></li>			
+	<li><a href="./rnao.php">RNAO Search</a></li>
 	<li><a>Switch to</a>
 		<ul>
 			<li><a href="./symbolic.php">Symbolic search</a></li>
 			<li><a href="./geometric.php">Geometric search</a></li>
 		</ul>
-	</li>	
+	</li>
 <!--	<li><a>Select a template</a>
 		<ul>
 			<li><a onclick="Tloop()">T-loop</a></li>
 		</ul>
 	</li>	-->
 	</ul>
-</div>	
+</div>
 <noscript>Your browser does not support JavaScript. Please turn it on or update your browser</noscript>
 
-<h1>RNAO WebFR3D is no longer supported. Please use <a href='http://rna.bgsu.edu/webfr3d/symbolic.php'>symbolic</a> or 
+<h1>RNAO WebFR3D is no longer supported. Please use <a href='http://rna.bgsu.edu/webfr3d/symbolic.php'>symbolic</a> or
 <a href='http://rna.bgsu.edu/webfr3d/symbolic.php'>geometric</a> WebFR3D instead.</h1>
 <!--
-<form action="Search.php" name="main" method="post" onSubmit="return Check(this.form)"> 
+<form action="functions/php/Search.php" name="main" method="post" onSubmit="return Check(this.form)">
 
 <input class='hidden' type='text' value='rnao' name='rnao'/>
 <div class = "select">
@@ -56,7 +56,7 @@ RNAO query:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <input type="button" value="Reset" onClick="ResetAll()" />
 </div>
 
-</form>  
--->  
+</form>
+-->
 </body>
 </html>
