@@ -1,10 +1,10 @@
 <?php
 error_reporting(E_ALL);
 
-if (isset($_POST['nucleotides'])) {    
+if (isset($_POST['nucleotides'])) {
     $list = $_POST['nucleotides'];
     if ($list == 'all') {
-        return;    
+        return;
     }
     $pdb = $_POST['PDBquery'];
 //    $ch = $_POST['ch'];
@@ -21,15 +21,9 @@ if (isset($_POST['nucleotides'])) {
 function parseNTs($pdb,$list)
 {
     $MAXNT = 25;
-    //Database parameters
-    $dbhost = "localhost";
-    $dbuser = "webfr3d";
-    $dbpass = "HKc4aLx6K7nVtG2U";
-    $dbname = "PDB";
-    //Connect to MySQL Server
-    $link = mysql_connect($dbhost, $dbuser, $dbpass);
-    mysql_select_db($dbname,$link) or die(mysql_error());
-            
+
+    include('include.php');
+
     $list = preg_replace('/ +/',',',$list);
     $list = preg_replace('/,+/',',',$list);
     $units = explode(",", $list);
@@ -62,7 +56,7 @@ function parseNTs($pdb,$list)
             $expanded_nts = array_merge($expanded_nts, $expand);
         }
     }
-    
+
     $final_list_array = array_unique(array_merge($NTs,$expanded_nts));
     if (count($final_list_array) > $MAXNT) {
     	echo "Please limit your search to 25 nucleotides";
@@ -101,7 +95,7 @@ function CheckSingleNucleotideList($NTs,$pdb,$link) {
         }
         $problems = substr($problems,0,-1);
 //        $problems .= " in chain $ch in $pdb";
-        $problems .= " in $pdb";        
+        $problems .= " in $pdb";
     }
     return $problems;
 }

@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 
-my $RESULTS = '/Servers/rna.bgsu.edu/webfred/Results';
-my $RUN_DIR = '/Servers/rna.bgsu.edu/webfred/InputScript/Running';
-#my $FAILED_DIR = '/Servers/rna.bgsu.edu/WebFR3D/InputScript/Failed';
-my $LONG_DIR = '/Servers/rna.bgsu.edu/webfred/InputScript/TooLong';
+$WEBFR3D     = '/Servers/rna.bgsu.edu/webfred';
+my $RESULTS  = $WEBFR3D . '/Results';
+my $RUN_DIR  = $WEBFR3D . '/InputScript/Running';
+my $LONG_DIR = $WEBFR3D . '/InputScript/TooLong';
 
 if ( $ARGV[0] =~ /[Query|Qrnao]_(\w+)\.m/ ) {
 	$uid = $1;
@@ -16,7 +16,6 @@ open(IN, '<', $file) or die("Cant open $file\n");
 my $content = '';
 while (<IN>) { $content .= $_;};
 close(IN);
-
 
 if ($content =~ /until the results become available/) {
 open(IN, '>', $file) or die("Cant open $file\n");
@@ -33,10 +32,5 @@ open(IN, '>', $file) or die("Cant open $file\n");
 	system($command);
 close(IN);
 }
-
-
-
-
-
 
 __END__

@@ -231,7 +231,10 @@ function setUp()
 function LookUpPDBInfo(pdb)
 {
 	var ajaxRequest = CreateAjaxRequestObject();
-	ajaxRequest.open("POST", "php/lookuppdbinfo.php", true);
+
+    var url = window.location.origin + '/' + window.location.pathname.split('/')[1];
+
+	ajaxRequest.open("POST", url + "/php/lookuppdbinfo.php", true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	re = /[a-zA-Z0-9]{4}/;
 	pdb = re.exec(pdb);

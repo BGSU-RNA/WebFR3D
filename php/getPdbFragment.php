@@ -1,11 +1,10 @@
 <?php
 
-//$chains = 'A,A,A';
-//$nts = '300,301,302';
+include('include.php');
 
+$nts    = $_POST["nts"];
+$pdb    = $_POST["pdb"];
 $chains = $_POST["ch"];
-$nts = $_POST["nts"];
-$pdb = $_POST["pdb"];
 
 $a = explode(',', $chains);
 $b = explode(',', $nts);
@@ -15,10 +14,10 @@ for ($i = 0; $i <= count($b); $i++) {
 $expr = '/^\s*(' . str_replace(',', '|', $nts) . ')\s*$/';
 
 $filename = 'temp/' . uniqid() . ".pdb";
-$myFile = '/Servers/rna.bgsu.edu/webfred/' . $filename;
+$myFile = $config['root'] . '/' . $filename;
 $fh = fopen($myFile, 'w') or die("can't open file");
 
-$handle = @fopen('./FR3D_submodule/PDBFiles/' . $pdb . '.pdb', "r");
+$handle = @fopen( $config['pdbs'] . '/' . $pdb . '.pdb', "r");
 if ($handle) {
     while (($line = fgets($handle, 4096)) !== false) {
 		$pos = strpos($line, 'ATOM');
@@ -31,12 +30,12 @@ if ($handle) {
     	}
     }
     if (!feof($handle)) {
-        echo "Error: unexpected fgets() fail\n";
+        echo "Error: unexpected fgets() failure\n";
     }
     fclose($handle);
 }
 fclose($fh);
 
-echo 'http://rna.bgsu.edu/webfred/' . $filename;
+echo $config['webroot'] . '/' . $filename;
 
 ?>

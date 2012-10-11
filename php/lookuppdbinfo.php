@@ -1,12 +1,5 @@
 <?php
-$dbhost = "localhost";
-$dbuser = "webfr3d";
-$dbpass = "HKc4aLx6K7nVtG2U";
-$dbname = "PDB";
-//Connect to MySQL Server
-$link = mysql_connect($dbhost, $dbuser, $dbpass);
-//Select Database
-mysql_select_db($dbname) or die(mysql_error());
+include 'include.php';
 // Retrieve data from Query String
 $pdb = mysql_real_escape_string($_POST['pdb']);
 

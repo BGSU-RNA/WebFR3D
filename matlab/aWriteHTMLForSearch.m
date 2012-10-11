@@ -34,12 +34,12 @@ fprintf(fid,'<link rel="stylesheet" type="text/css" href="%s/Library.css" >',con
 fprintf(fid,'<link rel="stylesheet" media="all" type="text/css" href="%s/menu_style.css" />',config.css);
 fprintf(fid,'	<!--greybox-->');
 fprintf(fid,'	<script type="text/javascript">');
-fprintf(fid,'	    var GB_ROOT_DIR = "http://rna.bgsu.edu/webfr3d/greybox/";');
+fprintf(fid,'	    var GB_ROOT_DIR = "%s/greybox/";', config.js);
 fprintf(fid,'	</script>');
-fprintf(fid,'	<script type="text/javascript" src="http://rna.bgsu.edu/webfr3d/greybox/AJS.js"></script>');
-fprintf(fid,'	<script type="text/javascript" src="http://rna.bgsu.edu/webfr3d/greybox/AJS_fx.js"></script>');
-fprintf(fid,'	<script type="text/javascript" src="http://rna.bgsu.edu/webfr3d/greybox/gb_scripts.js"></script>');
-fprintf(fid,'	<link href="http://rna.bgsu.edu/webfr3d/greybox/gb_styles.css" rel="stylesheet" type="text/css" />');
+fprintf(fid,'	<script type="text/javascript" src="%s/greybox/AJS.js"></script>', config.js);
+fprintf(fid,'	<script type="text/javascript" src="%s/greybox/AJS_fx.js"></script>', config.js);
+fprintf(fid,'	<script type="text/javascript" src="%s/greybox/gb_scripts.js"></script>', config.js);
+fprintf(fid,'	<link href="%s/greybox/gb_styles.css" rel="stylesheet" type="text/css" />', config.js);
 fprintf(fid,'	<!--greybox-->');
 
 
@@ -51,11 +51,11 @@ fprintf(fid,'<body onload="setUp();tablecloth();">');
 
 fprintf(fid,'<div class="menu">');
 fprintf(fid,'	<ul>');
-fprintf(fid,'	<li><a href="http://rna.bgsu.edu/WebFR3D/index.html">WebFR3D</a></li>');
-fprintf(fid,'	<li><a href="http://rna.bgsu.edu/WebFR3D/geometric.php">Geometric Search</a></li>');
+fprintf(fid,'	<li><a href="%s">WebFR3D</a></li>', config.webroot);
+fprintf(fid,'	<li><a href="%s/geometric.php">Geometric Search</a></li>', config.webroot);
 fprintf(fid,'	<li><a>Switch to</a>');
 fprintf(fid,'		<ul>');
-fprintf(fid,'			<li><a href="http://rna.bgsu.edu/WebFR3D/symbolic.php">Symbolic search</a></li>');
+fprintf(fid,'			<li><a href="%s/symbolic.php">Symbolic search</a></li>', config.webroot);
 fprintf(fid,'		</ul>');
 fprintf(fid,'	</li>');
 fprintf(fid,'	</ul>');
@@ -142,13 +142,13 @@ while (c <= min(length(Search.Candidates(:,1)),MAXPDB)),
         fprintf(fid,'jmolHtml("<table class=''checklock''><tr><td>");');
         fprintf(fid,'jmolCheckbox("frame all;display displayed or %i.1","frame all;display displayed and not %i.1","%s %i","checked",%s);',c,c,filename,c,thisid);
         fprintf(fid,'jmolHtml("</td><td>");');
-        fprintf(fid,'jmolHtml("<span><img class=''lock'' id=''lock%i'' src=''http://rna.bgsu.edu/WebFR3D/images/Lock.png'' onclick=''Lock(%i);''></span>");',c,c);
+        fprintf(fid,'jmolHtml("<span><img class=''lock'' id=''lock%i'' src=''%s/images/Lock.png'' onclick=''Lock(%i);''></span>");',c,config.webroot,c);
         fprintf(fid,'jmolHtml("</td></tr>");');
     else
         fprintf(fid,'jmolHtml("<tr><td>");');
         fprintf(fid,'jmolCheckbox("frame all;display displayed or %i.1","frame all;display displayed and not %i.1","%s %i",false,%s);',c,c,filename,c,thisid);
         fprintf(fid,'jmolHtml("</td><td>");');
-        fprintf(fid,'jmolHtml("<span><img class=''lock'' id=''lock%i'' src=''http://rna.bgsu.edu/WebFR3D/images/Lock.png'' onclick=''Lock(%i);''></span>");',c,c);
+        fprintf(fid,'jmolHtml("<span><img class=''lock'' id=''lock%i'' src=''%s/images/Lock.png'' onclick=''Lock(%i);''></span>");',c,config.webroot,c);
         fprintf(fid,'jmolHtml("</td></tr>");');
 
 %         fprintf(fid,'jmolCheckbox("frame all;display displayed or %i.1","frame all;display displayed and not %i.1","%s %i",false,%s);',c,c,filename,c,thisid);
@@ -171,13 +171,13 @@ while (c <= min(length(Search.Candidates(:,1)),MAXPDB)),
         fprintf(fid,'jmolHtml("<table class=''checklock''><tr><td>");');
         fprintf(fid,'jmolCheckbox("frame all;display displayed or %i.0","frame all;display displayed and not %i.0","%s %i","checked",%s);',c,c,filename,c,thisid);
         fprintf(fid,'jmolHtml("</td><td>");');
-        fprintf(fid,'jmolHtml("<img class=''lock'' id=''lock%i'' src=''http://rna.bgsu.edu/WebFR3D/images/Lock.png'' onclick=''Lock(%i);''>");',c,c);
+        fprintf(fid,'jmolHtml("<img class=''lock'' id=''lock%i'' src=''%s/images/Lock.png'' onclick=''Lock(%i);''>");',c,config.webroot,c);
         fprintf(fid,'jmolHtml("</td></tr>");');
     else
         fprintf(fid,'jmolHtml("<tr><td>");');
         fprintf(fid,'jmolCheckbox("frame all;display displayed or %i.0","frame all;display displayed and not %i.0","%s %i",false,%s);',c,c,filename,c,thisid);
         fprintf(fid,'jmolHtml("</td><td>");');
-        fprintf(fid,'jmolHtml("<img class=''lock'' id=''lock%i'' src=''http://rna.bgsu.edu/WebFR3D/images/Lock.png'' onclick=''Lock(%i);''>");',c,c);
+        fprintf(fid,'jmolHtml("<img class=''lock'' id=''lock%i'' src=''%s/images/Lock.png'' onclick=''Lock(%i);''>");',c,config.webroot,c);
         fprintf(fid,'jmolHtml("</td></tr>");');
 
 %         fprintf(fid,'jmolCheckbox("frame all;display displayed or %i.1","frame all;display displayed and not %i.1","%s %i",false,%s);',c,c,filename,c,thisid);
@@ -215,7 +215,7 @@ fprintf(fid,'</td>\n');
 % fprintf(fid,'<td class="locks"><br><br><br>');
 % c = 1;
 % while (c <= min(length(Search.Candidates(:,1)),MAXPDB)),
-%     fprintf(fid,'<span><img class="lock" id="lock%i" src="http://rna.bgsu.edu/WebFR3D/images/Lock.png" onclick="Lock(%i);"></span><br>',c,c);
+%     fprintf(fid,'<span><img class="lock" id="lock%i" src="%s/images/Lock.png" onclick="Lock(%i);"></span><br>',c,config.webroot,c);
 %     c = c+1;
 % end
 % fprintf(fid,'</td>\n');
