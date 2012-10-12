@@ -286,8 +286,7 @@ function ValidateDiscrepancy()
 function ValidatePDB()
 {
     var PDB = document.getElementById('PDB');
-    var nrlist = document.getElementById('nr_release_list');
-    if ( PDB.value == '----' && nrlist.selectedIndex <= 0 )
+    if ( PDB.value == '----' )
     {
         alert("Invalid PDB");
         PDB.focus();
@@ -302,7 +301,8 @@ function ValidatePDB()
 function ValidateTargetPDBs()
 {
     var PDBs = document.getElementById('SelectElem');
-    if ( PDBs.selectedIndex == -1 )
+    var nrlist = document.getElementById('nr_release_list');
+    if ( PDBs.selectedIndex == -1 && nrlist.selectedIndex <= 0 )
     {
         alert("No target files selected");
         PDBs.focus();
@@ -508,6 +508,9 @@ function TripleShearedTemplate()
     }
     document.getElementById("disc").value = "0.4";
     document.getElementById("SelectElem").value = "3I8I";
+    document.getElementById("nr_release_list").selectedIndex = 0;
+    document.getElementById("nr_resolution").selectedIndex = 0;
+
     CreateMatrix(this.form);
 
     document.getElementById("cell2").value = 'stack nstack';
@@ -549,7 +552,8 @@ function SarcinTemplate()
         }
     }
     document.getElementById("disc").value = "0.4";
-    document.getElementById("SelectElem").value = "NR_list_4A_2011-06-18";
+    document.getElementById("nr_release_list").value = "0.22";
+    document.getElementById("nr_resolution").selectedIndex = 5;
     CreateMatrix(this.form);
 
     document.getElementById("cell9").value = 'pair npair';
@@ -583,7 +587,9 @@ function TLoopTemplate()
         }
     }
     document.getElementById("disc").value = "0.4";
-    document.getElementById("SelectElem").value = "NR_list_4A_2011-06-18";
+    document.getElementById("nr_release_list").value = "0.22";
+    document.getElementById("nr_resolution").selectedIndex = 5;
+
     CreateMatrix(this.form);
 
     document.getElementById("cell8").value = 'cWW flank';
@@ -613,7 +619,9 @@ function Kt7Template()
         }
     }
     document.getElementById("disc").value = "0.5";
-    document.getElementById("SelectElem").value = "NR_list_4A_2011-06-18";
+    document.getElementById("nr_release_list").value = "0.22";
+    document.getElementById("nr_resolution").selectedIndex = 5;
+
     CreateMatrix(this.form);
 
     document.getElementById("cell13").value = 'cWW';
@@ -650,7 +658,9 @@ function CLoopTemplate()
         }
     }
     document.getElementById("disc").value = "0.5";
-    document.getElementById("SelectElem").value = "NR_list_4A_2011-06-18";
+    document.getElementById("nr_release_list").value = "0.22";
+    document.getElementById("nr_resolution").selectedIndex = 5;
+
     CreateMatrix(this.form);
 
     document.getElementById("cell12").value = 'cWW';
