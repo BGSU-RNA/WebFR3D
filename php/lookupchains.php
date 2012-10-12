@@ -10,13 +10,13 @@ $nts = explode(",", $list);
 
 $return = '<td class="rowheader"></td>';
 for ($i = 0; $i < count($nts); $i++) {
-    $query = "SELECT DISTINCT Chain FROM `Nucleotides_with_ind` WHERE PDB = '$pdb' AND Nt='$nts[$i]'";
+    $query = "SELECT DISTINCT `chain` FROM `pdb_coordinates` WHERE pdb = '$pdb' AND number='$nts[$i]' AND unit IN ('A', 'C', 'G', 'U');";
     $result = mysql_query($query) or die(mysql_error());
 
     $c = 0;
     $options = '';
     while($row = mysql_fetch_array($result)){
-    	$options .= "<option value='$row[Chain]' >$row[Chain]</option>";
+    	$options .= "<option value='$row[chain]' >$row[chain]</option>";
     	$c++;
     }
     if ( $c == 0 ) {

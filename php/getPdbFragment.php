@@ -1,10 +1,10 @@
 <?php
 
-include('include.php');
-
 $nts    = $_POST["nts"];
 $pdb    = $_POST["pdb"];
 $chains = $_POST["ch"];
+
+include 'config.php';
 
 $a = explode(',', $chains);
 $b = explode(',', $nts);

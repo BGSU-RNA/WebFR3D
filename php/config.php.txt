@@ -1,0 +1,13 @@
+<?php
+
+$config['webroot'] = '';
+$config['root'] = '';
+// location of the .pdb files
+$config['pdbs'] = '';
+
+$config['dbhost'] = '';
+$config['dbuser'] = '';
+$config['dbpass'] = '';
+$config['dbname'] = '';
+
+?>

@@ -76,7 +76,7 @@ function CheckSingleNucleotideList($NTs,$pdb,$link) {
     $errors = array();
     for ($i = 0; $i < count($NTs); $i++) {
         $NTs[$i] = mysql_real_escape_string($NTs[$i]);
-        $query = "SELECT * FROM `Nucleotides_with_ind` WHERE PDB = '$pdb' AND Nt='$NTs[$i]'";
+        $query = "SELECT * FROM `pdb_coordinates` WHERE pdb = '$pdb' AND number='$NTs[$i]'";
         $result = mysql_query($query,$link) or $return = mysql_error();
         if ((mysql_num_rows($result) == NULL) or (mysql_num_rows($result) == 0)) {
             array_push($errors,$NTs[$i]);
@@ -107,21 +107,21 @@ function ExpandRange($block,$pdb,$link) {
 
     $problems = '';
     preg_match('/(\d+\w*)[:-](\d+\w*)/',$block,$matches);
-    $query = "SELECT ind FROM `Nucleotides_with_ind` WHERE PDB = '$pdb' AND Nt ='$matches[1]'";
+    $query = "SELECT `index` FROM `pdb_coordinates` WHERE PDB = '$pdb' AND number ='$matches[1]'";
     $result = mysql_query($query,$link) or die(mysql_error());
     $row = mysql_fetch_array($result, MYSQL_ASSOC);
-    if (isset($row["ind"])) {
-       $start = $row["ind"];
+    if (isset($row["index"])) {
+       $start = $row["index"];
     }
     else {
         $problems .= "Nucleotide $matches[1] doesn't exist ($block)\n";
     }
 
-    $query = "SELECT ind FROM `Nucleotides_with_ind` WHERE PDB = '$pdb' AND Nt ='$matches[2]'";
+    $query = "SELECT `index` FROM `pdb_coordinates` WHERE PDB = '$pdb' AND number ='$matches[2]'";
     $result = mysql_query($query,$link) or die(mysql_error());
     $row = mysql_fetch_array($result, MYSQL_ASSOC);
-    if (isset($row["ind"])) {
-       $stop = $row["ind"];
+    if (isset($row["index"])) {
+       $stop = $row["index"];
     }
     else {
         $problems .= "Nucleotide $matches[2] doesn't exist ($block)\n";
@@ -134,10 +134,10 @@ function ExpandRange($block,$pdb,$link) {
     $range = array($start,$stop);
     sort($range,SORT_NUMERIC);
     for ($j = $range[0]; $j <= $range[1]; $j++) {
-        $query = "SELECT Nt FROM `Nucleotides_with_ind` WHERE PDB = '$pdb' AND ind = '$j'";
+        $query = "SELECT number FROM `pdb_coordinates` WHERE PDB = '$pdb' AND `index` = '$j'";
         $result = mysql_query($query,$link) or die(mysql_error());
         $row = mysql_fetch_array($result, MYSQL_ASSOC);
-        array_push($expand,$row["Nt"]);
+        array_push($expand,$row["number"]);
     }
     return $expand;
 }

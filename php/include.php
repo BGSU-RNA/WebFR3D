@@ -1,17 +1,10 @@
 <?php
 
-$config['webroot'] = 'http://rna.bgsu.edu/webfred';
-$config['root'] = '/Servers/rna.bgsu.edu/webfred';
-$config['pdbs'] = '/Servers/rna.bgsu.edu/nrlist/pdb';
-
-$dbhost = "localhost";
-$dbuser = "webfr3d";
-$dbpass = "HKc4aLx6K7nVtG2U";
-$dbname = "PDB";
+include('config.php');
 
 //Connect to MySQL Server
-$link = mysql_connect($dbhost, $dbuser, $dbpass);
+$link = mysql_connect($config['dbhost'], $config['dbuser'], $config['dbpass']);
 //Select Database
-mysql_select_db($dbname) or die(mysql_error());
+mysql_select_db($config['dbname']) or die(mysql_error());
 
 ?>
