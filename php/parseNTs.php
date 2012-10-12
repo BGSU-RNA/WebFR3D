@@ -56,8 +56,8 @@ function parseNTs($pdb,$list)
             $expanded_nts = array_merge($expanded_nts, $expand);
         }
     }
-
     $final_list_array = array_unique(array_merge($NTs,$expanded_nts));
+
     if (count($final_list_array) > $MAXNT) {
     	echo "Please limit your search to 25 nucleotides";
     	return;
@@ -76,7 +76,7 @@ function CheckSingleNucleotideList($NTs,$pdb,$link) {
     $errors = array();
     for ($i = 0; $i < count($NTs); $i++) {
         $NTs[$i] = mysql_real_escape_string($NTs[$i]);
-        $query = "SELECT * FROM `pdb_coordinates` WHERE pdb = '$pdb' AND number='$NTs[$i]'";
+        $query = "SELECT * FROM `pdb_coordinates` WHERE pdb = '$pdb' AND number=$NTs[$i] LIMIT 1;";
         $result = mysql_query($query,$link) or $return = mysql_error();
         if ((mysql_num_rows($result) == NULL) or (mysql_num_rows($result) == 0)) {
             array_push($errors,$NTs[$i]);
@@ -107,7 +107,7 @@ function ExpandRange($block,$pdb,$link) {
 
     $problems = '';
     preg_match('/(\d+\w*)[:-](\d+\w*)/',$block,$matches);
-    $query = "SELECT `index` FROM `pdb_coordinates` WHERE PDB = '$pdb' AND number ='$matches[1]'";
+    $query = "SELECT min(`index`) as `index` FROM `pdb_coordinates` WHERE PDB = '$pdb' AND number = $matches[1] AND `unit` IN ('A', 'C', 'G', 'U');";
     $result = mysql_query($query,$link) or die(mysql_error());
     $row = mysql_fetch_array($result, MYSQL_ASSOC);
     if (isset($row["index"])) {
@@ -117,7 +117,7 @@ function ExpandRange($block,$pdb,$link) {
         $problems .= "Nucleotide $matches[1] doesn't exist ($block)\n";
     }
 
-    $query = "SELECT `index` FROM `pdb_coordinates` WHERE PDB = '$pdb' AND number ='$matches[2]'";
+    $query = "SELECT min(`index`) as `index` FROM `pdb_coordinates` WHERE PDB = '$pdb' AND number = $matches[2] AND `unit` IN ('A', 'C', 'G', 'U');";
     $result = mysql_query($query,$link) or die(mysql_error());
     $row = mysql_fetch_array($result, MYSQL_ASSOC);
     if (isset($row["index"])) {
@@ -134,7 +134,7 @@ function ExpandRange($block,$pdb,$link) {
     $range = array($start,$stop);
     sort($range,SORT_NUMERIC);
     for ($j = $range[0]; $j <= $range[1]; $j++) {
-        $query = "SELECT number FROM `pdb_coordinates` WHERE PDB = '$pdb' AND `index` = '$j'";
+        $query = "SELECT `number` FROM `pdb_coordinates` WHERE PDB = '$pdb' AND `index` = $j  AND `unit` IN ('A', 'C', 'G', 'U') LIMIT 1;";
         $result = mysql_query($query,$link) or die(mysql_error());
         $row = mysql_fetch_array($result, MYSQL_ASSOC);
         array_push($expand,$row["number"]);

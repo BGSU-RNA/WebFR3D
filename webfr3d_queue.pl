@@ -30,7 +30,8 @@ my $WEBFR3D_matlab = $WEBFR3D . '/matlab';
 my $RESULTS        = $WEBFR3D . '/Results';
 my $INPUT_DIR      = $WEBFR3D . '/InputScript/Input';
 my $RUN_DIR        = $WEBFR3D . '/InputScript/Running';
-my $MATLAB         = '/Applications/MATLAB_R2007b/bin/matlab -nojvm -nodisplay -r ';
+# jvm is required for urlread and other matlab functions
+my $MATLAB         = '/Applications/MATLAB_R2007b/bin/matlab -nodisplay -r ';
 
 
 ### Signal Handling ###

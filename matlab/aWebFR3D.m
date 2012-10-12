@@ -91,7 +91,7 @@ function reportMistake(result,id,message,Query)
 
     get_config;
     disp(message);
-    fid = fopen([config.running filesep id filesep 'results.php'],'w');
+    fid = fopen([config.results filesep id filesep 'results.php'],'w');
     fprintf(fid, '<html><head><link rel="stylesheet" type="text/css" href="%s/Library.css"><title>FR3D results</title></head><body>',config.css);
     fprintf(fid, '<div class="message">\n');
     fprintf(fid, '<h2>Thank you for using FR3D</h2><br>\n');
@@ -101,7 +101,7 @@ function reportMistake(result,id,message,Query)
     if isfield(Query, 'Email')
         link = sprintf('%s/%s/results.php', config.web_results, id);
         message = sprintf('Please visit this webpage to see your FR3D results: %s  This is an automated message. For support email %s', link, config.email);
-        command = sprintf('echo "%s" | tee foo | mail -s "FR3D results %s" %s', message, id, config.email);
+        command = sprintf('echo "%s" | tee email.txt | mail -s "FR3D results %s" %s; rm email.txt;', message, id, Query.Email);
         unix(command);
         clear Query.Email;
     end

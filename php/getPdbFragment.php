@@ -1,41 +1,54 @@
 <?php
 
+include 'include.php';
+
 $nts    = $_POST["nts"];
-$pdb    = $_POST["pdb"];
 $chains = $_POST["ch"];
+$pdb    = $_POST["pdb"];
 
-include 'config.php';
+$download = False;
 
-$a = explode(',', $chains);
-$b = explode(',', $nts);
-for ($i = 0; $i <= count($b); $i++) {
-	$chain_corr{$b[$i]} = $a[$i];
+if (!isset($nts)) {
+    $nts = $_GET["nts"];
+    $download = True;
 }
-$expr = '/^\s*(' . str_replace(',', '|', $nts) . ')\s*$/';
 
-$filename = 'temp/' . uniqid() . ".pdb";
-$myFile = $config['root'] . '/' . $filename;
-$fh = fopen($myFile, 'w') or die("can't open file");
-
-$handle = @fopen( $config['pdbs'] . '/' . $pdb . '.pdb', "r");
-if ($handle) {
-    while (($line = fgets($handle, 4096)) !== false) {
-		$pos = strpos($line, 'ATOM');
-		if ($pos !== false) {
-	    	if (preg_match($expr,substr($line, 22, 5),$match)) {
-	    		if (substr($line, 21, 1)  == $chain_corr{$match[1]}) {
-					fwrite($fh, $line);
-	    		}
-	    	}
-    	}
-    }
-    if (!feof($handle)) {
-        echo "Error: unexpected fgets() failure\n";
-    }
-    fclose($handle);
+if (!isset($chains)) {
+    $chains = $_GET["ch"];
 }
-fclose($fh);
 
-echo $config['webroot'] . '/' . $filename;
+if (!isset($pdb)) {
+    $pdb = $_GET["pdb"];
+}
+
+$chain_list = explode(',', $chains);
+$nt_list = explode(',', $nts);
+$count = count($nt_list);
+
+$query = "SELECT `coordinates` FROM `pdb_coordinates` WHERE pdb = '$pdb' AND (";
+for ($i = 0; $i < $count; $i++) {
+    if ($i == $count - 1) {
+        $query .= "(`number` = $nt_list[$i] and `chain` = '$chain_list[$i]')";
+    } else {
+        $query .= "(`number` = $nt_list[$i] and `chain` = '$chain_list[$i]') OR ";
+    }
+}
+$query .= ');';
+
+$result = mysql_query($query) or die(mysql_error());
+
+$return = '';
+while($row = mysql_fetch_array($result)){
+    $return .= $row[coordinates] . "\n";
+}
+
+mysql_close($link);
+
+// force download
+if ($download) {
+    header('Content-Disposition: attachment; filename=coordinates.pdb');
+}
+
+echo $return;
 
 ?>

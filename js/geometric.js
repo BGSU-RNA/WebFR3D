@@ -59,12 +59,18 @@ function ViewQuery()
 			jmolInitialize('../jmol');
 			jmolSetDocument(false);
 			jmolSetAppletColor('white');
-			var jmoldiv = jmolApplet(300,"load "+ajaxRequest.responseText+';select [U]; color navy; select [C]; color gold;select [G]; color chartreuse; select [A]; color red;select all;spacefill off;cartoon;');
+            var downloadUrl = window.location.origin + '/' + window.location.pathname.split('/')[1] + '/php/';
+			var jmoldiv = jmolAppletInline(300,ajaxRequest.responseText,'select [U]; color navy; select [C]; color gold;select [G]; color chartreuse; select [A]; color red;select all;spacefill off;cartoon;');
 			jmoldiv = jmoldiv + jmolCheckbox('select *.C5;label "%n%R";color labels black;', "labels off", "nucleotide numbers", false);
-			jmoldiv = jmoldiv + '&nbsp;&nbsp;&nbsp;<a href=' +ajaxRequest.responseText+ ' class="small_font">Download pdb</a>' ;
+			jmoldiv = jmoldiv + "&nbsp;&nbsp;&nbsp;";
+			jmoldiv += "<a href='"+downloadUrl+"getPdbFragment.php?" + queryString + "' class='small_font'>Download pdb</a>";
 			document.getElementById('jmol').innerHTML = jmoldiv;
 		}
 	}
+}
+
+function onDownload(dataToDownload) {
+    document.location = 'data:Application/octet-stream,' + dataToDownload;
 }
 
 function ShowHelp(obj)

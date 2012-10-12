@@ -2,8 +2,6 @@
 
 $config['webroot'] = '';
 $config['root'] = '';
-// location of the .pdb files
-$config['pdbs'] = '';
 
 $config['dbhost'] = '';
 $config['dbuser'] = '';

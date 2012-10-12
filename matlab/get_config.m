@@ -3,7 +3,7 @@
 % customizable parameters
 config.root = '/Servers/rna.bgsu.edu/webfred';
 config.webroot = 'http://rna.bgsu.edu/webfred';
-config.email = 'apetrov@bgsu.edu';
+config.email = 'rnabgsu@gmail.com';
 
 % result file locations
 config.results = fullfile(config.root, 'Results');
