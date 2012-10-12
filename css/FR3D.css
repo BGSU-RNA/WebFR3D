@@ -24,18 +24,18 @@ input.dist {
     width:60px;
 }
 select.where {
-    height:200px;
+    height:100px;
     width:100%;
 }
 select.what {
     width:70px;
 }
-div.options {
-    top:310px;
+.options {
+    top:340px;
 }
 .help {
     height: 100px;
-    top:435px;
+    top:460px;
 }
 .left_side {
 	position:absolute;
@@ -156,6 +156,17 @@ textarea {
 .email {
 	width:95%;
 }
-input[type=text]:focus { 
+input[type=text]:focus {
 	border: 1px solid #a0acbf;
-} 
+}
+.nrlists {
+    top: 210px;
+}
+.nrlists ul {
+    list-style-type: none;
+    padding: 4px;
+    margin:0px;
+}
+.nrlists li {
+    margin-top: 4px;
+}

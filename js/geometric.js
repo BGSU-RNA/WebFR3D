@@ -286,7 +286,8 @@ function ValidateDiscrepancy()
 function ValidatePDB()
 {
     var PDB = document.getElementById('PDB');
-    if ( PDB.value == '----' )
+    var nrlist = document.getElementById('nr_release_list');
+    if ( PDB.value == '----' && nrlist.selectedIndex <= 0 )
     {
         alert("Invalid PDB");
         PDB.focus();

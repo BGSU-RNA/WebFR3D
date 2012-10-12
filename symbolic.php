@@ -53,7 +53,11 @@
 <input class='hidden' type='text' value='symbolic' name='symbolic'>
 <div class='select left_side'>
 	<div class='handle'>Structures to search</div>
-	<div style="margin-top:1px" class='content'><?php makeListFromDatabase('where'); ?></div>
+	<div style="margin-top:1px" class='content'>
+	  <select class='where' id='SelectElem' multiple='multiple' name='wheretosearch[]' onclick='ShowHelp(this)'>
+	    <?php get_all_pdb_files('where'); ?>
+	  </select>
+	</div>
 </div>
 
 <div class = "dynamic">
@@ -80,6 +84,39 @@
 
     </div>
 <br>
+</div>
+
+<div class='nrlists left_side'>
+
+  <div class='handle'>Non-redundant lists</div>
+
+  <div class="content">
+    <ul>
+      <li>
+        NR release:
+        <select id='nr_release_list' name='nr_release_list'>
+          <option value='none'>----</option>
+          <?php get_nr_releases(); ?>
+        </select>
+      </li>
+      <li>
+        Resolution:
+        <select id='nr_resolution' name='nr_resolution'>
+          <option value='1.5'>1.5&Aring X-ray</option>
+          <option value='2.0'>2.0&Aring X-ray</option>
+          <option value='2.5'>2.5&Aring X-ray</option>
+          <option value='3.0'>3.0&Aring X-ray</option>
+          <option value='3.5'>3.5&Aring X-ray</option>
+          <option value='4.0'>4.0&Aring X-ray</option>
+          <option value='20.0'>Xray+cryoEM</option>
+          <option value='all'>Xray+cryoEM+NMR</option>
+        </select>
+      </li>
+      <li>
+        Learn more at <a href="http://rna.bgsu.edu/rna3dhub/nrlist" target="_blank">RNA 3D Hub</a>
+      </li>
+    </div>
+
 </div>
 
 <div class="options left_side">
