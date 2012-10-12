@@ -315,11 +315,17 @@ function process_nrlists($input)
             fclose($nrlist);
             chmod($nrlist, 0775);
         }
+        $input['nrlist'] = "NR_{$nr_release}_{$nr_resolution}_list.pdb";
     } else {
-        $nrlist = FALSE;
+        $input['nrlist'] = FALSE;
     }
-    $input['nrlist'] = "NR_{$nr_release}_{$nr_resolution}_list.pdb";
     return $input;
+}
+
+function get_nr_list_filename($release, $resolution)
+{
+    include('config.php');
+    return $config['fr3d'] . "/PDBFiles/NR_{$release}_{$resolution}_list.pdb";
 }
 
 ?>

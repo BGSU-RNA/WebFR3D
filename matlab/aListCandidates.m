@@ -22,7 +22,7 @@ end
 
 % -------------------------------------- print header line
 t = 1;
-Text{1} = '<table id="maintable" class="sortable"><tr>';
+Text{1} = '<table id="maintable"><tr>';
 
 
 if isfield(Search,'AvgDisc'),
@@ -72,8 +72,8 @@ for i=1:min(s,NumToOutput),
 %     Infofile = zGetPDBInfo(File(f));
 %     Text{i+t} = [Text{i+t} sprintf('<td><a href = "http://www.pdb.org/pdb/explore/explore.do?structureId=%s" target="_blank" Title = "Resolution %6.2fA&#10;%s">%s</a></td>', ...
 %         File(f).Filename, Infofile.Info.Resolution, Infofile.Info.Descriptor, File(f).Filename)];
-    Text{i+t} = [Text{i+t} sprintf('<td><a href="javascript:LookUpPDBInfo(''%s'');" class="pdblink">%s</a></td>',File(f).Filename,File(f).Filename)];    
-    
+    Text{i+t} = [Text{i+t} sprintf('<td><a href="javascript:LookUpPDBInfo(''%s'');" class="pdblink">%s</a></td>',File(f).Filename,File(f).Filename)];
+
 
     Indices = Candidates(i,1:N);                 % indices of nucleotides
 
@@ -147,7 +147,7 @@ output = {};
 for i = 1:length(Text)
     s = regexp(Text{i},'</td>','split');
     if i == 1
-        s = regexp(Text{i},'</th>','split');        
+        s = regexp(Text{i},'</th>','split');
     end
     output = [output; s];
 end
@@ -170,9 +170,9 @@ for i = 1:length(output(:,1))
     for j = 1:length(output(1,:))
         if i == 1
             if j~=length(output(1,:))
-                T{i} = [T{i} output{i,j} '</th>'];            
+                T{i} = [T{i} output{i,j} '</th>'];
             else
-                T{i} = [T{i} output{i,j}];                            
+                T{i} = [T{i} output{i,j}];
             end
         elseif j ~= length(output(1,:))
             T{i} = [T{i} output{i,j} '</td>'];

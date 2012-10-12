@@ -57,7 +57,8 @@ function ValidateMatrix()
 function ValidateTargetPDBs()
 {
     var PDBs = document.getElementById('SelectElem');
-    if ( PDBs.selectedIndex == -1 ) {
+    var nrlist = document.getElementById('nr_release_list');
+    if ( PDBs.selectedIndex == -1 && nrlist.selectedIndex <= 0 ) {
         alert("No target files selected");
         PDBs.focus();
         return false;
@@ -188,7 +189,7 @@ function Tetraloops()
 	ResetAll();
     document.getElementById("NumNT").value = "6";
     document.getElementById("SelectElem").value = "3I8I";
-    document.getElementById("help").innerHTML = '<a href="http://rna.bgsu.edu/WebFR3D/Results/4d0804a7bb1d0/results.php">View results</a>';    
+    document.getElementById("help").innerHTML = '<a href="http://rna.bgsu.edu/WebFR3D/Results/4d0804a7bb1d0/results.php">View results</a>';
     CreateMatrix(this.form);
 
     document.getElementById("cell6").value = 'cWW flank';

@@ -44,7 +44,6 @@ fprintf(fid,'	<!--greybox-->');
 
 
 fprintf(fid,'<script src="%s/results.js" type="text/javascript"></script>',config.js);
-% fprintf(fid,'<script src="%s/sorttable.js" type="text/javascript"></script>',config.js);
 
 fprintf(fid,'<script src="../../../jmol/Jmol.js" type="text/javascript"></script></head>');
 fprintf(fid,'<body onload="setUp();tablecloth();">');

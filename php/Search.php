@@ -33,10 +33,4 @@ elseif ( isset( $_POST["rnao"] ) ) {
 	createRNAOQueryFile($_POST, $uid, $root);
 }
 
-function get_nr_list_filename($release, $resolution)
-{
-    include('config.php');
-    return $config['fr3d'] . "/PDBFiles/NR_{$release}_{$resolution}_list.pdb";
-}
-
 ?>
