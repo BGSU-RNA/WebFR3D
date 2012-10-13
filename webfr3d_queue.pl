@@ -20,7 +20,10 @@ my $TERM :shared = 0;
 my $IDLE_QUEUE = Thread::Queue->new();
 
 # set WebFR3D location
-my $WEBFR3D = '/Servers/rna.bgsu.edu/webfred';
+use Cwd 'abs_path';
+my $WEBFR3D = abs_path($0);
+# delete script name from the path
+$WEBFR3D =~ s/\/\w+\.pl$//;
 
 # CPU time out for each query in seconds
 my $TIMEOUT = 1800;

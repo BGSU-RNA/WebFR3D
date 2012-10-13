@@ -1,6 +1,10 @@
 #!/usr/bin/perl -w
 
-$WEBFR3D     = '/Servers/rna.bgsu.edu/webfred';
+use Cwd 'abs_path';
+my $WEBFR3D = abs_path($0);
+# delete script name from the path
+$WEBFR3D =~ s/\/\w+\.pl$//;
+
 my $RESULTS  = $WEBFR3D . '/Results';
 my $RUN_DIR  = $WEBFR3D . '/InputScript/Running';
 my $LONG_DIR = $WEBFR3D . '/InputScript/TooLong';
