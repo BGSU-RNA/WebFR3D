@@ -14,7 +14,7 @@ mkdir($path);
 chmod($path,0777);
 
 createPlaceHolder($uid,$root);
-$location = "Location: $url/Results/{$uid}/results.php";
+$location = "Location: $url/Results/{$uid}";
 header($location);
 
 $list = $_POST["nucleotides"];
