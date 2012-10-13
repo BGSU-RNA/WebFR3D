@@ -255,7 +255,7 @@ function [] = ShowMessage(resultsdir,webroot,message,Search,filename)
     end
 
     fid = fopen([resultsdir filesep 'results.php'],'w');
-    fprintf(fid, '<html><head><link rel="stylesheet" type="text/css" href="%s/Library.css"><title>FR3D results</title></head><body>',webroot);
+    fprintf(fid, '<html><head><link rel="stylesheet" type="text/css" href="../../css/Library.css"><title>FR3D results</title></head><body>');
     fprintf(fid, '<div class="message">');
     fprintf(fid, '<h2>Thank you for using FR3D</h2><br>');
     fprintf(fid, '<p>%s</p><br><br>',message);
