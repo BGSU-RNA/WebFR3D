@@ -1,12 +1,12 @@
 
 #versions a{
-	margin:0 20px 10px 0;	
-	cursor:pointer;	
+	margin:0 20px 10px 0;
+	cursor:pointer;
 }
 
 .description {
 	background-color:#edecbc;
-	border:1px solid #999;	
+	border:1px solid #999;
 	width:450px;
 	min-height:140px;
 	display:none;
@@ -26,16 +26,12 @@
 }
 
 #symbolic .arrow {
-	margin-left:210px;	
-}
-
-#rnao .arrow {
-	margin-left:385px;	
+	margin-left:210px;
 }
 
 #main {
   position:relative;
-  margin: 0 auto;    
+  margin: 0 auto;
   width:500px;
   top:70px;
     border: 1px solid #999;
@@ -43,17 +39,17 @@
 }
 #left {
     position:relative;
-    display:inline-block;/* FF3, Opera, Safari */    
+    display:inline-block;/* FF3, Opera, Safari */
 }
 #right {
     position:relative;
     display:inline-block;/* FF3, Opera, Safari */
-    float:right;    
+    float:right;
 }
 #center {
     position:relative;
     left:80px;
-    display:inline-block;/* FF3, Opera, Safari */    
+    display:inline-block;/* FF3, Opera, Safari */
 }
 a {
     text-decoration:none;

@@ -247,31 +247,6 @@ function createSymbolicQueryFile($_POST, $id, $root)
 
 }
 
-function createRNAOQueryFile($_POST, $uid, $root)
-{
-    $FileName = "$root/InputScript/Input/Qrnao_{$uid}.m";
-    $fh = fopen($FileName, 'w') or die("Can't open Query file");
-    $q = $_POST["rnao_query"];
-    $q = stripcslashes($q);
-    fwrite($fh, "{$q}\n");
-    $numpdb = count($_POST['wheretosearch']);
-    echo $_POST["wheretosearch"][0];
-    fwrite($fh, "Query.SearchFiles = cell(1,$numpdb);\n");
-    fwrite($fh, "Query.Name = '{$uid}';\n");
-    fwrite($fh, "Query.Geometric = 0;\n");
-    fwrite($fh, "Query.ExcludeOverlap = 1;\n");
-    for ($i = 0; $i < $numpdb; $i++)
-    {
-        $ii = $i+1;
-        fwrite($fh, "Query.SearchFiles{{$ii}} = '{$_POST["wheretosearch"][$i]}';\n");
-    }
-    if ( $_POST["mail"] != '')
-    {
-    	fwrite($fh, "Query.Email = '{$_POST["mail"]}';\n");
-    }
-    fclose($fh);
-}
-
 function createPlaceHolder($id, $root)
 {
     error_reporting(E_ALL);

@@ -9,7 +9,7 @@ my $RESULTS  = $WEBFR3D . '/Results';
 my $RUN_DIR  = $WEBFR3D . '/InputScript/Running';
 my $LONG_DIR = $WEBFR3D . '/InputScript/TooLong';
 
-if ( $ARGV[0] =~ /[Query|Qrnao]_(\w+)\.m/ ) {
+if ( $ARGV[0] =~ /Query_(\w+)\.m/ ) {
 	$uid = $1;
 } else {
 	die;

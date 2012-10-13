@@ -29,8 +29,5 @@ if ( isset( $_POST["geometric"] ) ) {
 elseif ( isset( $_POST["symbolic"] ) ) {
 	createSymbolicQueryFile($_POST, $uid, $root);
 }
-elseif ( isset( $_POST["rnao"] ) ) {
-	createRNAOQueryFile($_POST, $uid, $root);
-}
 
 ?>

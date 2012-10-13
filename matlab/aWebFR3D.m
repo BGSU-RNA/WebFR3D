@@ -15,68 +15,27 @@ if ~exist(destination,'dir')
 end
 fidi = fopen([config.running filesep query],'r');
 Query = [];
-if strfind(query,'rnao')
+
+while 1
+    tline = fgetl(fidi);
+    if ~ischar(tline),   break,   end
 
     try
-        Query = xReadRNAOQuery([config.running filesep query]);
+        eval(tline);
     catch
-        message = 'Parsing failed. Check your syntax.';
+        fprintf('Problem with line: %s\n',tline);
+        message = 'Critical error. Execution aborted.';
         reportMistake(config.running,id,message,Query);
-        movefile([config.running filesep query], [config.failed filesep query]);
-        quit;
-    end
-    try
-        aWebFR3DSearch;
-    catch
-        message = 'Problem during FR3D search.';
-        reportMistake(config.running,id,message,Query);
-        movefile([config.running filesep query], [config.failed filesep query]);
-        quit;
-    end
-    if isfield(Search,'Candidates') && ~isempty(Search.Candidates)
         try
-            r = size(Search.Candidates);
-            if r(1) < 300
-                aWriteHTMLForSearch(id);
-            else
-                message = ['Too many candidates (' int2str(r(1)) ')'];
-                reportMistake(config.running,id,message,Query);
-                movefile([config.running filesep query], [config.running filesep id filesep query]);
-                quit;
-            end
-        catch
-            message = 'Problem creating the webpage';
-            reportMistake(config.running,id,message,Query);
             movefile([config.running filesep query], [config.failed filesep query]);
-            quit;
-        end
-    else
-        message = 'No candidates found';
-        reportMistake(config.running,id,message,Query);
-        movefile([config.running filesep query], [config.running filesep id filesep query]);
-        quit;
-    end
-else
-    while 1
-        tline = fgetl(fidi);
-        if ~ischar(tline),   break,   end
-%                 disp(tline);
-        try
-            eval(tline);
         catch
-            fprintf('Problem with line: %s\n',tline);
-            message = 'Critical error. Execution aborted.';
-            reportMistake(config.running,id,message,Query);
-            try
-                movefile([config.running filesep query], [config.failed filesep query]);
-            catch
 
-            end
-            break;
         end
+        break;
     end
-    fclose(fidi);
 end
+fclose(fidi);
+
 try
     movefile([config.running filesep query], [config.results filesep id filesep query]);
 catch
