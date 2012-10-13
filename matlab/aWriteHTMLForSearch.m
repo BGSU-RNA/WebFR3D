@@ -237,13 +237,7 @@ fprintf(fid,'</div></body></html>');
 fclose(fid);
 disp('File processed');
 
-if isfield(Search.Query, 'Email')
-    link = sprintf('%s/%s/results.php', config.web_results, filename);
-    message = sprintf('Please visit this webpage to see your FR3D results: %s  This is an automated message. For support, email apetrov@bgsu.edu', link);
-    command = sprintf('echo "%s" | tee foo | mail -s "FR3D results %s" %s', message, filename, Search.Query.Email);
-    unix(command);
-    clear Search.Query.Email;
-end
+SendEmail(Search, filename);
 
 
 end
@@ -255,23 +249,28 @@ function [] = ShowMessage(resultsdir,webroot,message,Search,filename)
     end
 
     fid = fopen([resultsdir filesep 'results.php'],'w');
-    fprintf(fid, '<html><head><link rel="stylesheet" type="text/css" href="../../css/Library.css"><title>FR3D results</title></head><body>');
+    fprintf(fid, '<html><head><link rel="stylesheet" type="text/css" href="../../css/Library.css"><title>WebFR3D results</title></head><body>');
     fprintf(fid, '<div class="message">');
-    fprintf(fid, '<h2>Thank you for using FR3D</h2><br>');
+    fprintf(fid, '<h2>Thank you for using WebFR3D</h2><br>');
     fprintf(fid, '<p>%s</p><br><br>',message);
     fprintf(fid, '</div></body></html>');
     fclose(fid);
 
-    if nargin == 4
-        if isfield(Search.Query, 'Email')
-            link = sprintf('%s/Results/%s/results.php', webroot, filename);
-            message = sprintf('Please visit this webpage to see your FR3D results: %s  This is an automated message. For support, email apetrov@bgsu.edu', link);
-            command = sprintf('echo "%s" | tee foo | mail -s "FR3D results %s" %s', message, filename, Search.Query.Email);
-            unix(command);
-        end
+    if nargin == 5
+        SendEmail(Search, filename);
     end
 
 end
 
+function [] = SendEmail(Search, filename)
 
+    get_config();
+    if isfield(Search.Query, 'Email')
+        link = sprintf('%s/Results/%s', config.webroot, filename);
+        message = sprintf('Please visit this webpage to see your WebFR3D results: %s  This is an automated message. For support, email %s.', link, config.email);
+        command = sprintf('echo "%s" | tee email.txt | mail -s "WebFR3D results %s" %s; rm email.txt;', message, filename, Search.Query.Email);
+        unix(command);
+    end
+
+end
 

@@ -257,13 +257,13 @@ function createPlaceHolder($id, $root)
     $htmlcode = '<html>
     <head>
     <meta http-equiv="refresh" content="10" >
-    <title>FR3D results</title>
+    <title>WebFR3D results</title>
    	<link rel="stylesheet" media="all" type="text/css" href="../../css/Library.css" />
     </head>
 
     <body>
 	<div class="message">
-    <h2>Thank you for using FR3D.</h2><br>
+    <h2>Thank you for using WebFR3D.</h2><br>
     <p>Your job request has been successfully submitted. The results will appear here shortly.<br>
     You can bookmark this page and return later to check your results.</p><br><br>
 
