@@ -28,11 +28,7 @@
 	<ul>
 	<li><a href="./index.html">WebFR3D</a></li>
 	<li><a href="./geometric.php">Geometric Search</a></li>
-	<li><a>Switch to</a>
-		<ul>
-			<li><a href="./symbolic.php">Symbolic search</a></li>
-		</ul>
-	</li>
+    <li><a href="./symbolic.php">Symbolic search</a></li>
 	<li><a>Select an example</a>
 		<ul>
 			<li><a onclick="TripleShearedTemplate()">Triple Sheared Internal Loop</a></li>
@@ -47,6 +43,16 @@
 			<li><a href="http://goo.gl/2vENT" target="_blank">In a new window</a></li>
 		</ul>
 	</li>
+
+	<li><a>Links</a>
+		<ul>
+			<li><a href="http://rna.bgsu.edu">RNA BGSU group</a></li>
+			<li><a href="http://rna.bgsu.edu/rna3dhub">RNA 3D Hub</a></li>
+			<li><a href="http://rna.bgsu.edu/FR3D">FR3D</a></li>
+			<li><a href="https://github.com/BGSU-RNA/WebFR3D">WebFR3D on Github</a></li>
+		</ul>
+	</li>
+
 	</ul>
 </div>
 

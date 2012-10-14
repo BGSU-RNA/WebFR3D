@@ -1,3 +1,6 @@
+body {
+    margin: 0px;
+}
 .menu{
 	border:none;
 	border:0px;
@@ -49,7 +52,7 @@
 		}
 	.menu li:hover ul{
 		display:block;
-		
+
 		}
 	.menu li li {
 		background:url('images/sub_sep.gif') bottom left no-repeat;
@@ -61,7 +64,7 @@
 		}
 	.menu li:hover li a{
 		background:none;
-		
+
 		}
 	.menu li ul a{
 		display:block;
@@ -80,6 +83,5 @@
 			}
 	.menu p{
 		clear:left;
-		}	
+		}
 
-		
