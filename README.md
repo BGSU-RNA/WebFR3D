@@ -26,6 +26,8 @@ Folders that require special permissions:
 
 ## Running WebFR3D
 
+Launch WebFR3D queue like so:
+
     cd path/to/webfr3d
     perl webfr3d_queue.pl
 
