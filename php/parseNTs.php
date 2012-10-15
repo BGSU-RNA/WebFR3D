@@ -63,7 +63,6 @@ function parseNTs($pdb,$list)
     	return;
     }
     $final_list_string = implode(',',$final_list_array);
-    echo($final_list_string);
     mysql_close($link);
     return $final_list_string;
 }
