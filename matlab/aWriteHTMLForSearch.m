@@ -29,7 +29,7 @@ Text = aListCandidates(Search,Inf,filename);
 fid = fopen([results filesep 'results.php'],'w');
 fprintf(fid,'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">');
 fprintf(fid,'<html lang = "en"><head><meta http-equiv="Content-Type" content="text/html;charset=utf-8" >');
-fprintf(fid,'<title>FR3D results</title>');
+fprintf(fid,'<title>WebFR3D results</title>');
 fprintf(fid,'<link rel="stylesheet" type="text/css" href="%s/Library.css" >',config.css);
 fprintf(fid,'<link rel="stylesheet" media="all" type="text/css" href="%s/menu_style.css" />',config.css);
 fprintf(fid,'	<!--greybox-->');
