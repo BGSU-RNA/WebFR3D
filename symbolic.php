@@ -24,7 +24,7 @@
 
 <div class="menu">
 	<ul>
-	<li><a href="./index.html">WebFR3D</a></li>
+	<li><a href="http://rna.bgsu.edu/webfr3d">WebFR3D</a></li>
 	<li><a href="./symbolic.php">Symbolic Search</a></li>
     <li><a href="./geometric.php">Geometric search</a></li>
 	<li><a>Select an example</a>
