@@ -28,7 +28,7 @@ open(IN, '>', $file) or die("Cant open $file\n");
 	print IN '<link rel="stylesheet" type="text/css" href="../../css/Library.css"></head><body>';
 	print IN '<div class="message">';
 	print IN '<h2>Thank you for using FR3D</h2><br>';
-	print IN '<p>The job was aborted because it took longer than 30 minutes. Please consider installing FR3D locally to perform ';
+	print IN '<p>The job was aborted because it used more than 30 minutes of CPU time. Please consider installing FR3D locally to perform ';
 	print IN '	very intense calculations or revise your query. Try searching in fewer pdb files or impose stricter constraints.';
 	print IN '</p><br><br>';
 	print IN '</div></body></html>';
