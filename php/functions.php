@@ -20,8 +20,36 @@ EOT;
 
 }
 
+/*
+    Input: $_POST or $_GET arrays. Look for 'pdb_ids' array or a single entry.
+    Output: an array of pdb ids or an empty array.
+*/
+function get_submitted_pdb_files() {
 
-function get_all_pdb_files($mode) {
+    // use either POST or GET
+    if ( isset($_POST['pdb_ids']) and count($_POST['pdb_ids']) > 0 ) {
+        $submitted = explode(',', $_POST['pdb_ids']);
+    } elseif ( isset($_GET['pdb_ids']) and count($_GET['pdb_ids']) > 0 ) {
+        $submitted = explode(',', $_GET['pdb_ids']);
+    } else {
+        $submitted = array();
+    }
+
+    $pdb_ids = array();
+    if ( count($submitted) > 0 ) {
+        foreach($submitted as $pdb_id) {
+            // check each entry with a regex
+            if ( preg_match('/[A-z0-9]{4}/', $pdb_id ) ) {
+                $pdb_ids[] = $pdb_id;                
+            }
+        }        
+    }
+
+    return $pdb_ids;
+}
+
+
+function get_all_pdb_files($mode, $selected = NULL) {
 
     include('include.php');
 
@@ -29,7 +57,11 @@ function get_all_pdb_files($mode) {
     $result = mysql_query($query) or die(mysql_error());
 
     while($row = mysql_fetch_array($result)){
-		echo "<option value=\"$row[structureId]\">$row[structureId]</option>\n";
+        if ( $selected and in_array($row[structureId] , $selected) ) {
+            echo "<option value=\"$row[structureId]\" selected>$row[structureId]</option>\n";
+        } else {
+            echo "<option value=\"$row[structureId]\">$row[structureId]</option>\n";
+        }
     }
     echo "</select>\n";
 
