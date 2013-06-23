@@ -61,7 +61,7 @@
 	<div class='handle'>Structures to search</div>
 	<div style="margin-top:1px" class='content'>
 	  <select class='where' id='SelectElem' multiple='multiple' name='wheretosearch[]' onclick='ShowHelp(this)'>
-	    <?php get_all_pdb_files('where'); ?>
+	    <?php get_all_pdb_files('where', get_submitted_pdb_files()); ?>
 	  </select>
 	</div>
 </div>
