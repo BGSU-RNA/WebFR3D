@@ -1,6 +1,6 @@
 % zWebFR3DSearchWithLimits(Query,CandidateLimit,TimeLimit) conducts a FR3D search
 
-% function [Search] = zWebFR3DSearchWithLimits(Query,CandidateLimit,TimeLimit)
+function [Search] = zWebFR3DSearchWithLimits(Query,CandidateLimit,TimeLimit)
 
 % The result of running xFR3DSearch is a variable Search with these fields:
 %
@@ -20,18 +20,7 @@
 
 
 if 10 > 1,
-  clear Query
 
-  Query.Description    = 'Sarcin five nucleotide geometric';
-  Query.Filename       = '1s72';
-  Query.NTList         = {'2694' '2701' '2693' '2702' '2692'};
-  Query.ChainList      = {'0' '0' '0' '0' '0'};   % all in the 23S
-  Query.DiscCutoff     = 0.5;
-
-  Query.SearchFiles    = {'nrlist_1.34_3.0_list'};
-
-  TimeLimit = 9999999999999;
-  CandidateLimit = 100;
   Verbose = 1;
   config.results = 'temp';
 
@@ -186,16 +175,29 @@ if isfield(Query,'NumNT'),                    % if query is specified OK
         Discrepancy = (1:length(Candidates(:,1)))';% helps identify candidates
       end
 
-      TempSearch.Candidates = Candidates;
-      TempSearch.Query = Query;
-      TempSearch = xAddFiletoSearch(File,TempSearch);
+      if length(Discrepancy) > 0,
+        clear TempSearch
+        TempSearch.Candidates = Candidates;
+        TempSearch.Query = Query;
+        TempSearch = xAddFiletoSearch(File,TempSearch);
 
-      Search.File(f) = TempSearch.File(1);
+        if ~isfield(TempSearch.File(1),'AA');
+          TempSearch.File(f).AA = [];
+        end
 
-      Candidates(:,end) = f;                       % use current file number
+        if isfield(TempSearch.File(1),'Het'),
+          rmfield(TempSearch.File(1),'Het');
+        end
 
-      AllCandidates = [AllCandidates; Candidates];
-      AllDiscrepancies = [AllDiscrepancies; Discrepancy];
+TempSearch.File(1)
+
+        Search.File(f) = TempSearch.File(1);
+
+        Candidates(:,end) = f;                       % use current file number
+
+        AllCandidates = [AllCandidates; Candidates];
+        AllDiscrepancies = [AllDiscrepancies; Discrepancy];
+      end
 
     end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
