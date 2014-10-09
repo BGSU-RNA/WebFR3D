@@ -26,7 +26,7 @@
 <noscript>Your browser does not support JavaScript. Please turn it on or update your browser</noscript>
 <div class="menu">
 	<ul>
-	<li><a href="http://rna.bgsu.edu/webfr3d">WebFR3D</a></li>
+    <li><a href="<?= $config['webroot'] ?>">WebFR3D</a></li>
 	<li><a href="./geometric.php">Geometric Search</a></li>
     <li><a href="./symbolic.php">Symbolic search</a></li>
 	<li><a>Select an example</a>
