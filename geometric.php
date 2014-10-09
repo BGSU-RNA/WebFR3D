@@ -26,7 +26,7 @@
 <noscript>Your browser does not support JavaScript. Please turn it on or update your browser</noscript>
 <div class="menu">
 	<ul>
-    <li><a href="<?= $config['webroot'] ?>">WebFR3D</a></li>
+    <li><a href="<?= $config['webroot'] . "/webfr3d" ?>">WebFR3D</a></li>
 	<li><a href="./geometric.php">Geometric Search</a></li>
     <li><a href="./symbolic.php">Symbolic search</a></li>
 	<li><a>Select an example</a>
@@ -46,9 +46,9 @@
 
 	<li><a>Links</a>
 		<ul>
-			<li><a href="http://rna.bgsu.edu">RNA BGSU group</a></li>
-			<li><a href="http://rna.bgsu.edu/rna3dhub">RNA 3D Hub</a></li>
-			<li><a href="http://rna.bgsu.edu/FR3D">FR3D</a></li>
+            <li><a href="<?= $config['webroot'] ?>">RNA BGSU group</a></li>
+            <li><a href="<?= $config['webroot'] . "/rna3dhub" ?>">RNA 3D Hub</a></li>
+            <li><a href="<?= $config['webroot'] . "/FR3D" ?>">FR3D</a></li>
 			<li><a href="https://github.com/BGSU-RNA/WebFR3D">WebFR3D on Github</a></li>
 		</ul>
 	</li>
@@ -95,7 +95,7 @@
             </select>
           </li>
           <li>
-            Learn more at <a href="http://rna.bgsu.edu/rna3dhub/nrlist" target="_blank">RNA 3D Hub</a>
+              Learn more at <a href="<?= $config['webroot'] . "/rna3dhub/nrlist" ?>" target="_blank">RNA 3D Hub</a>
           </li>
         </div>
 
