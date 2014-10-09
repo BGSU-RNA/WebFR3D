@@ -1,3 +1,15 @@
+var base = [window.location.origin, 'webfr3d'].join('/');
+
+function resultUrl(id) {
+  'use strict';
+  return [base, 'Results', id, 'results.php'].join('/');
+}
+
+function resultLink(id) {
+  'use strict';
+  return "<a href='" + resultUrl(id) + "'>View results</a>";
+}
+
 function Check(form)
 {
 	queryNTs = '';
@@ -496,7 +508,7 @@ function TripleShearedTemplate()
 //    queryNTs = "1856,1857,1858,1859,1860,1882,1883,1884,1885,1886";
     document.getElementById("NT").value = "1856:1860, 1882:1886";
     queryNTs = "1856,1857,1858,1859,1860,1882,1883,1884,1885,1886";
-	document.getElementById("help").innerHTML = "<a href='http://rna.bgsu.edu/WebFR3D/Results/4d07a1a83f7dd/results.php'>View results</a>";
+	document.getElementById("help").innerHTML = resultLink("4d07a1a83f7dd");
     var what = document.getElementById("PDB").options;
     for (i = 0; i <= what.length; i++)
     {
@@ -541,7 +553,7 @@ function SarcinTemplate()
 	ResetAll();
     document.getElementById("NT").value = "2701:2704, 2694:2690";
     queryNTs = "2701,2702,2703,2704,2690,2691,2692,2693,2694";
-	document.getElementById("help").innerHTML = "<a href='http://rna.bgsu.edu/WebFR3D/Results/4e023dc5d5c08/results.php'>View results</a>";
+	document.getElementById("help").innerHTML = resultLink("4e023dc5d5c08");
     var what = document.getElementById("PDB").options;
     for (i = 0; i <= what.length; i++)
     {
@@ -576,7 +588,7 @@ function TLoopTemplate()
 	ResetAll();
     document.getElementById("NT").value = "312:319";
     queryNTs = "312,313,314,315,316,317,318,319";
-	document.getElementById("help").innerHTML = "<a href='http://rna.bgsu.edu/WebFR3D/Results/4e023e7dac8d1/results.php'>View results</a>";
+	document.getElementById("help").innerHTML = resultLink("4e023e7dac8d1");
     var what = document.getElementById("PDB").options;
     for (i = 0; i <= what.length; i++)
     {
@@ -608,7 +620,7 @@ function Kt7Template()
 	ResetAll();
     document.getElementById("NT").value = "77:81,93:100";
     queryNTs = "77,78,79,80,81,93,94,95,96,97,98,99,100";
-	document.getElementById("help").innerHTML = "<a href='http://rna.bgsu.edu/WebFR3D/Results/4e02415c73c35/results.php'>View results</a>";
+	document.getElementById("help").innerHTML = resultLink("4e02415c73c35");
     var what = document.getElementById("PDB").options;
     for (i = 0; i <= what.length; i++)
     {
@@ -647,7 +659,7 @@ function CLoopTemplate()
 	ResetAll();
     document.getElementById("NT").value = "73:77,95:101";
     queryNTs = "73,74,75,76,77,95,96,97,98,99,100,101";
-	document.getElementById("help").innerHTML = "<a href='http://rna.bgsu.edu/WebFR3D/Results/4e02420231066/results.php'>View results</a>";
+	document.getElementById("help").innerHTML = resultLink("4e02420231066");
     var what = document.getElementById("PDB").options;
     for (i = 0; i <= what.length; i++)
     {
