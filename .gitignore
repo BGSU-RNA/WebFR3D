@@ -48,3 +48,4 @@ build/config/buildinfo.properties
 *.app
 matlab/get_config.m
 php/config.php
+.agignore
