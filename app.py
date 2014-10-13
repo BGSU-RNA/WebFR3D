@@ -29,9 +29,9 @@ def teardown_request(exception):
 @app.route("/", methods=['GET', 'POST'])
 def index():
     data = db.default_info(g.db)
-    data['given'] = request.args
+    data['given'] = utils.santize_given(request.args)
     if request.method == 'POST':
-        data['given'] = request.form
+        data['given'] = utils.santize_given(request.form)
     return render_template('index.html', data=data)
 
 
@@ -44,9 +44,9 @@ def search():
         g.beanstalk.put(json.dumps(data))
         return redirect(url_for('results', id=data['id']))
     except utils.ValidationError:
-        return render_template("invalid.html")
+        return render_template("invalid.html", data=data)
     except:
-        return render_template('failed.html')
+        return render_template('failed.html', data=data)
 
 
 @app.route("/results/:id", method=['GET'])
