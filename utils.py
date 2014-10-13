@@ -38,14 +38,14 @@ def santize_given(given):
             empty_row = ','.join([''] * size)
             rows.extend([empty_row] * (size - len(rows)))
 
-        for row in given.get('rows', []):
-            cells = row.split(',')
+        for row, raw in enumerate(rows):
+            cells = raw.split(',')
             if len(cells) > size:
                 cells = cells[0:size]
             if len(cells) < size:
                 cells.extend([None] * (size - len(cells)))
 
-            for cell in cells:
+            for column, cell in enumerate(cells):
                 if cell == '':
                     cell = None
                 data['cells'][row][column] = cell
