@@ -2,6 +2,8 @@ import re
 
 PDB = re.compile('^[0-9][A-z0-9]{3}$')
 
+MAX_NTS = 20
+
 
 class ValidationError(Exception):
     """Raised when a search is invalid or cannot be santized.
@@ -14,7 +16,7 @@ def santize_search(search):
 
 
 def santize_given(given):
-    data = {pdbs: {}, cells: {}, size: []}
+    data = {pdbs: {}, cells: {}, size: None}
 
     for raw in given.get('pdbs', []):
         for pdb in raw.split(','):
@@ -22,24 +24,26 @@ def santize_given(given):
                 data['pdbs'][pdb] = True
 
     if given['size']:
-        size = given['size'].split(',')
-        data['size'] = (size[0], size[1])
-        (row_count, col_count) = data['size']
+        size = int(given['size'])
+        data['size'] = size
+
+        if size > MAX_NTS:
+            raise ValidationError("Too many NTs")
 
         rows = given.get('rows', [])
-        if len(rows) > row_count:
-            rows = rows[0:row_count]
+        if len(rows) > size:
+            rows = rows[0:size]
 
-        if len(rows) < row_count:
-            empty_row = ','.join([''] * col_count)
-            rows.extend([empty_row] * (row_count - len(rows)))
+        if len(rows) < size:
+            empty_row = ','.join([''] * size)
+            rows.extend([empty_row] * (size - len(rows)))
 
         for row in given.get('rows', []):
             cells = row.split(',')
-            if len(cells) > col_count:
-                cells = cells[0:col_count]
-            if len(cells) < col_count:
-                cells.extend([None] * (col_count - len(cells)))
+            if len(cells) > size:
+                cells = cells[0:size]
+            if len(cells) < size:
+                cells.extend([None] * (size - len(cells)))
 
             for cell in cells:
                 if cell == '':
