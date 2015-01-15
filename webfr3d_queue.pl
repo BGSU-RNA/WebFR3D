@@ -6,6 +6,7 @@ use warnings;
 use threads;
 use threads::shared;
 use Thread::Queue;
+use FindBin qw($RealBin);
 
 ### Global Variables ###
 
@@ -29,12 +30,13 @@ $WEBFR3D =~ s/\/\w+\.pl$//;
 my $TIMEOUT = 1800;
 #my $TIMEOUT = 1;
 
+my %config = do $RealBin . '/webfr3d_queue_config.pl';
 my $WEBFR3D_matlab = $WEBFR3D . '/matlab';
 my $RESULTS        = $WEBFR3D . '/Results';
 my $INPUT_DIR      = $WEBFR3D . '/InputScript/Input';
 my $RUN_DIR        = $WEBFR3D . '/InputScript/Running';
 # jvm is required for urlread and other matlab functions
-my $MATLAB         = '/Applications/MATLAB_R2007b/bin/matlab -nodisplay -r ';
+my $MATLAB         = $config{matlab};
 
 
 ### Signal Handling ###
