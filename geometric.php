@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="./js/greybox/gb_scripts.js"></script>
 	<link href="./js/greybox/gb_styles.css" rel="stylesheet" type="text/css" >
 	<!--greybox-->
-    <script src="./jmol/Jmol.js" type='text/javascript'></script>
+    <script src="<?=$config['webroot']?>/jmol/Jmol.js" type='text/javascript'></script>
 	<script type="text/javascript" src="./js/dom-drag.js"></script>
 	<?php include 'php/functions.php'; google_analytics(); ?>
 </head>
