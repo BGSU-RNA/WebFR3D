@@ -1,3 +1,15 @@
+var base = [window.location.origin, 'webfr3d'].join('/');
+
+function resultUrl(id) {
+  'use strict';
+  return [base, 'Results', id, 'results.php'].join('/');
+}
+
+function resultLink(id) {
+  'use strict';
+  return "<a href='" + resultUrl(id) + "'>View results</a>";
+}
+
 function Check(form)
 {
     if ( ValidateTargetPDBs() ) {
@@ -189,7 +201,7 @@ function Tetraloops()
 	ResetAll();
     document.getElementById("NumNT").value = "6";
     document.getElementById("SelectElem").value = "3I8I";
-    document.getElementById("help").innerHTML = '<a href="http://rna.bgsu.edu/WebFR3D/Results/4d0804a7bb1d0/results.php">View results</a>';
+    document.getElementById("help").innerHTML = resultLink('4d0804a7bb1d0');
     CreateMatrix(this.form);
 
     document.getElementById("cell6").value = 'cWW flank';
@@ -211,7 +223,7 @@ function Hairpins()
     document.getElementById("cell2").value = 'cWW flank';
 
     document.getElementById("cell3").value = '>';
-    document.getElementById("help").innerHTML = '<a href="http://rna.bgsu.edu/WebFR3D/Results/4d07a35dd4635/results.php">View results</a>';
+    document.getElementById("help").innerHTML = resultLink('4d07a35dd4635');
 }
 
 function InternalLoops()
@@ -230,7 +242,7 @@ function InternalLoops()
     document.getElementById("cell14").value = '>';
     document.getElementById("cell28").value = '>';
     document.getElementById("cell35").value = '>';
-    document.getElementById("help").innerHTML = '<a href="http://rna.bgsu.edu/WebFR3D/Results/4d07a68037c2b/results.php">View results</a>';
+    document.getElementById("help").innerHTML = resultLink('4d07a68037c2b');
 }
 
 function cWW_tHWBaseTriples()
@@ -243,7 +255,7 @@ function cWW_tHWBaseTriples()
     document.getElementById("cell2").value = 'cWW';
     document.getElementById("cell6").value = 'tHW';
 
-    document.getElementById("help").innerHTML = '<a href="http://rna.bgsu.edu/WebFR3D/Results/4d07acda133a4/results.php">View results</a>';
+    document.getElementById("help").innerHTML = resultLink('4d07acda133a4');
 }
 
 function TripleSheared()
@@ -268,5 +280,5 @@ function TripleSheared()
     document.getElementById("cell88").value = '=1';
     document.getElementById("cell99").value = '=1';
 
-    document.getElementById("help").innerHTML = '<a href="http://rna.bgsu.edu/WebFR3D/Results/4d07b26217358/results.php">View results</a>';
+    document.getElementById("help").innerHTML = resultLink('4d07b26217358');
 }
