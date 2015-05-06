@@ -9,12 +9,12 @@ $root = $config['root'];
 $url  = $config['webroot'];
 
 $uid = uniqid();
-$path = "$root/Results/{$uid}";
+$path = "$root/webfr3d/Results/{$uid}";
 mkdir($path);
 chmod($path,0777);
 
 createPlaceHolder($uid,$root);
-$location = "Location: $url/Results/{$uid}";
+$location = "Location: $url/webfr3d/Results/{$uid}";
 header($location);
 
 $list = $_POST["nucleotides"];
