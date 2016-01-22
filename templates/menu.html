@@ -1,31 +1,26 @@
-<div class="menu">
-  <ul>
-    <li><a href="<?= $config['webroot'] . "/webfr3d" ?>">WebFR3D</a></li>
-    <li><a href="./geometric">Geometric Search</a></li>
-    <li><a href="./symbolic">Symbolic search</a></li>
-    <li><a>Select an example</a>
-    <ul>
-      <li><a onclick="TripleShearedTemplate()">Triple Sheared Internal Loop</a></li>
-      <li><a onclick="SarcinTemplate()">Sarcin-ricin Internal Loop</a></li>
-      <li><a onclick="TLoopTemplate()">T-loop Hairpin</a></li>
-      <li><a onclick="Kt7Template()">Kink-turn 7</a></li>
-      <li><a onclick="CLoopTemplate()">C-loop</a></li>
-    </ul>
-    </li>
-    <li><a>Help</a>
-    <ul>
-      <li><a href="http://goo.gl/2vENT" target="_blank">In a new window</a></li>
-    </ul>
-    </li>
+<nav class='navbar navbar-inverse navbar-fixed-top'>
+  <div class='container'>
+    <div class='navbar-header'>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/webfr3d">WebFR3D</a>
+    </div>
 
-    <li><a>Links</a>
-    <ul>
-      <li><a href="<?= $config['webroot'] ?>">RNA BGSU Group</a></li>
-      <li><a href="<?= $config['webroot'] . "/rna3dhub" ?>">RNA 3D Hub</a></li>
-      <li><a href="<?= $config['webroot'] . "/FR3D" ?>">FR3D</a></li>
-      <li><a href="https://github.com/BGSU-RNA/WebFR3D">WebFR3D on Github</a></li>
-    </ul>
-    </li>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href='/webfr3d'>BGSU RNA</a></li>
+        <li><a href="/webfr3d/help">Help</a></li>
+        <li><a href="/webfr3d/about">About</a></li>
+        <li><a href="/webfr3d/contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-  </ul>
-</div>
+{#
+vim: ft=jinja
+#}

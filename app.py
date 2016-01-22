@@ -6,9 +6,9 @@ from flask import url_for
 
 import mimerender
 
-import web_fr3d as fr3d
+import web_fr3d
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/webfr3d/static')
 mimerender = mimerender.FlaskMimeRender()
 
 # TODO: Should we use flask-sqlachemly? Seems to do most of what we need
@@ -16,59 +16,70 @@ mimerender = mimerender.FlaskMimeRender()
 
 @app.before_request
 def before_request():
-    g.queue = fr3d.background.Queue(app.config)
+    """Run before any request to get a connection to the queue and eventually
+    the database.
+    """
+    # g.queue = web_fr3d.background.Queue(app.config)
+    pass
 
 
 @app.teardown_request
 def teardown_request(exception):
+    """Run after each request to close the connection to the queue or database.
+    """
     queue = getattr(g, 'queue', None)
     if queue is not None:
         queue.close()
 
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/webfr3d", methods=['GET', 'POST'])
 @mimerender(
-    html=fr3d.render.to_html,
-    json=fr3d.render.to_json,
+    html=web_fr3d.render.to_html,
+    json=web_fr3d.render.to_json,
     override_input_key='format',
 )
 def index():
-    data = fr3d.db.default_info(g.db)
-    data['query'] = fr3d.utils.santize_query(request.args)
-    if request.method == 'POST':
-        data['query'] = fr3d.utils.santize_query(request.form)
+    """Route for building the search page.
+    """
+    data = {}
+    # data = web_fr3d.db.default_info(g.db)
+    # data['query'] = web_fr3d.utils.santize_query(request.args)
+    # if request.method == 'POST':
+    #     data['query'] = web_fr3d.utils.santize_query(request.form)
     data['template'] = 'index.html'
     return data
 
 
-@app.route("/search", methods=['POST'])
+@app.route("/webfr3d/search", methods=['POST'])
 @mimerender(
-    html=fr3d.render.to_html,
-    json=fr3d.render.to_json,
+    html=web_fr3d.render.to_html,
+    json=web_fr3d.render.to_json,
     override_input_key='format',
 )
 def search():
+    """This url response is where data is sent for searches.
+    """
     data = request.form
     try:
-        data = fr3d.utils.santize_search(data)
-        fr3d.background.queue.process(data)
+        data = web_fr3d.utils.santize_search(data)
+        web_fr3d.background.queue.process(data)
         return redirect(url_for('results', id=data['id']))
-    except fr3d.utils.ValidationError:
+    except web_fr3d.utils.ValidationError:
         data['status'] = 'invalid'
     except:
         data['status'] = 'failed'
     return data
 
 
-@app.route("/results/:id", method=['GET'])
+@app.route("/webfr3d/results/:id", methods=['GET'])
 @mimerender(
-    html=fr3d.render.to_html,
-    json=fr3d.render.to_json,
+    html=web_fr3d.render.to_html,
+    json=web_fr3d.render.to_json,
     override_input_key='format',
 )
-def result(id):
-    return fr3d.queue.result(id)
+def result(query_id):
+    return {'status': 'succeeded', 'msg': 'Implement me'}
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

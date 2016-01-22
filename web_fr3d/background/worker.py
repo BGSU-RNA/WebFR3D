@@ -29,10 +29,13 @@ class Worker(object):
         self.beanstalk.ignore('default')
 
         self.name = kwargs.get('name', str(uuid.uuid4()))
-        self.logger = logging.getLogger('queue.Worker:%s' % self.name)
+        self.logger = logging.getLogger('queue.Worker:%s' % self.id)
 
         for key, value in kwargs.items():
             setattr(self, key, value)
+
+    def notify(self, query_id, status):
+        pass
 
     @abc.abstractmethod
     def process(self, query):
@@ -53,10 +56,12 @@ class Worker(object):
                 result = self.process(query)
             self.logger.debug("Done working on %s", query['id'])
             self.save(result, status='succeeded')
+            self.notify(query, status='succeeded')
 
         except WorkTimeOutException:
             self.logger.warning("Timeout with %s", query['id'])
             self.save(query, status='timeout')
+            self.notify(query, status='timeout')
             job.delete()
 
     def __call__(self):

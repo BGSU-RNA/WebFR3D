@@ -7,7 +7,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 
 class Fr3d(object):
-    def __init__(self):
+    def __init__(self, db):
         pass
 
     def known(self, query_id):
