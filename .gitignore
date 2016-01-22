@@ -49,3 +49,5 @@ build/config/buildinfo.properties
 matlab/get_config.m
 php/config.php
 .agignore
+.direnv/
+.envrc
