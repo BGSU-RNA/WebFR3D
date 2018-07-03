@@ -57,7 +57,7 @@ function get_all_pdb_files($mode, $selected = NULL)
     $result = mysql_query($query) or die(mysql_error());
 
     while($row = mysql_fetch_array($result)){
-        $sid = $row['structureId']
+        $sid = $row['structureId'];
         if ( $selected and in_array($sid , $selected) ) {
             echo "<option value=\"$sid\" selected>$sid</option>\n";
         } else {
