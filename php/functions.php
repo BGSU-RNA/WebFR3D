@@ -49,18 +49,18 @@ function get_submitted_pdb_files() {
 }
 
 
-function get_all_pdb_files($mode, $selected = NULL) {
-
+function get_all_pdb_files($mode, $selected = NULL)
+{
     include('include.php');
 
     $query = "SELECT DISTINCT structureId FROM `pdb_info`;";
     $result = mysql_query($query) or die(mysql_error());
 
     while($row = mysql_fetch_array($result)){
-        if ( $selected and in_array($row[structureId] , $selected) ) {
-            echo "<option value=\"$row[structureId]\" selected>$row[structureId]</option>\n";
+        if ( $selected and in_array($row['structureId'] , $selected) ) {
+            echo "<option value=\"$row['structureId']\" selected>$row['structureId']</option>\n";
         } else {
-            echo "<option value=\"$row[structureId]\">$row[structureId]</option>\n";
+            echo "<option value=\"$row['structureId']\">$row['structureId']</option>\n";
         }
     }
     echo "</select>\n";
