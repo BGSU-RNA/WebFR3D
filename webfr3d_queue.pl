@@ -11,7 +11,7 @@ use FindBin qw($RealBin);
 ### Global Variables ###
 
 # Maximum working threads
-my $MAX_THREADS = 4;
+my $MAX_THREADS = 1;
 
 # Flag to inform all threads that application is terminating
 my $TERM :shared = 0;
@@ -99,6 +99,7 @@ MAIN:
             system($command);
             $command = $MATLAB . '"addpath(' . "'" . $WEBFR3D_matlab . "')" . ';aWebFR3D(' . "'" . $job . "')" . '"';
             my $work = "ulimit -t $TIMEOUT;$command;perl $WEBFR3D" . '/' . "check_results.pl $job";
+            print($work . "\n");
             $work_queues{$tid}->enqueue($work);
         }
         sleep(5);

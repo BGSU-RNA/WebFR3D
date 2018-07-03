@@ -201,8 +201,8 @@ function createGeometricQueryFile($_POST, $id, $root)
 
 //    fwrite($fh, "try,");
 //    fwrite($fh, "xFR3DSearch;\n");
-    fwrite($fh, "tic;aWebFR3DSearch;\n");
-    fwrite($fh, "aWriteHTMLForSearch('{$id}');toc;");
+    fwrite($fh, "tic;\naWebFR3DSearch;\n");
+    fwrite($fh, "aWriteHTMLForSearch('{$id}');\ntoc;");
 //	fwrite($fh, "catch ME, movefile('$root/InputScript/Input/Query_{$id}.m','$root/InputScript/Failed');");
 //	fwrite($fh, "disp('An error occured while processing the query');return;end");
     fclose($fh);
@@ -284,7 +284,9 @@ function createPlaceHolder($id, $root)
     error_reporting(E_ALL);
 
     $FileName = "$root/Results/{$id}/results.php";
-    $fh = fopen($FileName, 'w') or die("Can't open file Query");
+    mkdir("$root/Results/{$id}") or die("Can't make query directory");
+    ini_set("track_errors", '1');
+    $fh = fopen($FileName, 'w') or die("Can't open file Query '$php_errormsg'");
     chmod($FileName,0775);
     $htmlcode = '<html>
     <head>
