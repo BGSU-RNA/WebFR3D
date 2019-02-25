@@ -8,7 +8,7 @@ import mimerender
 
 import web_fr3d
 
-app = Flask(__name__, static_url_path='/webfr3d/static')
+app = Flask(__name__, static_url_path='/web-fr3d/static')
 mimerender = mimerender.FlaskMimeRender()
 
 # TODO: Should we use flask-sqlachemly? Seems to do most of what we need
@@ -32,7 +32,7 @@ def teardown_request(exception):
         queue.close()
 
 
-@app.route("/webfr3d", methods=['GET', 'POST'])
+@app.route("/web-fr3d", methods=['GET', 'POST'])
 @mimerender(
     html=web_fr3d.render.to_html,
     json=web_fr3d.render.to_json,
@@ -50,7 +50,7 @@ def index():
     return data
 
 
-@app.route("/webfr3d/search", methods=['POST'])
+@app.route("/web-fr3d/search", methods=['POST'])
 @mimerender(
     html=web_fr3d.render.to_html,
     json=web_fr3d.render.to_json,
@@ -71,7 +71,7 @@ def search():
     return data
 
 
-@app.route("/webfr3d/results/:id", methods=['GET'])
+@app.route("/web-fr3d/results/:id", methods=['GET'])
 @mimerender(
     html=web_fr3d.render.to_html,
     json=web_fr3d.render.to_json,
