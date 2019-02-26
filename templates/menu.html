@@ -1,26 +1,59 @@
-<nav class='navbar navbar-inverse navbar-fixed-top'>
-  <div class='container'>
-    <div class='navbar-header'>
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/WebFR3D/">WebFR3D</a>
-    </div>
+    <nav class='navbar navbar-inverse navbar-fixed-top'>
+      <div class='container'>
+        <div class='navbar-header'>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/WebFR3D/">WebFR3D</a>
+        </div>
 
-    <div id="navbar" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li><a href='/WebFR3D/'>BGSU RNA</a></li>
-        <li><a href="/WebFR3D/help">Help</a></li>
-        <li><a href="/WebFR3D/about">About</a></li>
-        <li><a href="/WebFR3D/contact">Contact</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Search WebFR3D: <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="./geometric.php">Geometric Search</a></li>
+                <li><a href="./symbolic.php">Symbolic search</a></li>
+              </ul>
+            </li>
+            <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">WebFR3D Examples: <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-header">Geometric Examples:</li>
+                <li><a onclick="TripleShearedTemplate()">Triple Sheared Internal Loop</a></li>
+                <li><a onclick="SarcinTemplate()">Sarcin-ricin Internal Loop</a></li>
+                <li><a onclick="TLoopTemplate()">T-loop Hairpin</a></li>
+                <li><a onclick="Kt7Template()">Kink-turn 7</a></li>
+                <li><a onclick="CLoopTemplate()">C-loop</a></li>
+                <li class="dropdown-divider"><hr/></li>
+                <li class="dropdown-header">Symbolic Examples:</li>
+                <li><a onclick="Hairpins()">All Hairpin Loops in 3I8I</a></li>
+                <li><a onclick="Tetraloops()">All Tetraloops in 3I8I</a></li>
+                <li><a onclick="InternalLoops()">All Internal Loops in 3I8I</a></li>
+                <li><a onclick="TripleSheared()">Triple Sheared Internal Loop</a></li>
+                <li><a onclick="cWW_tHWBaseTriples()">cWW_tHW Base Triples in 3I8I</a></li>
+              </ul>
+            </li>
+            <li><a href="/WebFR3D/help">WebFR3D Help</a></li>
+            <li><a href="http://goo.gl/2vENT" target="_blank">WebFR3D Help (Google Doc)</a></li>
+            <li><a href='/WebFR3D/'>BGSU RNA</a></li>
+            <li><a href="/WebFR3D/about">About</a></li>
+            <li><a href="/WebFR3D/contact">Contact</a></li>
+            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Links: <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?= $config['webroot'] ?>">RNA BGSU group</a></li>
+                <li><a href="<?= $config['webroot'] . "/rna3dhub" ?>">RNA 3D Hub</a></li>
+                <li><a href="<?= $config['webroot'] . "/FR3D" ?>">FR3D</a></li>
+                <li><a href="https://github.com/BGSU-RNA/WebFR3D">WebFR3D on Github</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
 {#
 vim: ft=jinja
 #}
+
