@@ -114,3 +114,6 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# WebFR3d-Specific
+index.html
