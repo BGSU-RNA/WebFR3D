@@ -3,164 +3,168 @@
 {% block title %}WebFR3D{% endblock %}
 
 {% block body %}
-<p>Blake said: "Someone should implement me"</p>
-<p>TO DO:
-<ul>
-  <li>implement PHP includes</li>
-  <li>META tags:
-    <ul>
-      <li>[BOTH] meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"</li>
-      <li>[GEO] meta name="description" content="Geometric search for RNA 3D motifs in PDB files.Geometric queries of PDB files.Online version of FR3D.WebFR3D."</li>
-      <li>[GEO] meta name="keywords" content="WebFR3D,RNA,3D motifs,geometric search,RNA 3D structure,PDB"</li>
-      <li>[SYM] meta name="description" content="Symbolic search for RNA 3D motifs in PDB files"</li>
-      <li>[SYM] meta name="keywords" content="WebFR3D,RNA,3D motifs,symbolic search"</li>
-    </ul>
-  </li>
-  <li>Javascript:
-    <ul>
-      <li>[GEO] script src="./js/geometric.js" type="text/javascript"</li>
-      <li>[SYM] script src="./js/symbolic.js" type="text/javascript" </li>
-      <li>[BOTH] GREYBOX:
-        <code>
-  <!--greybox-->
-  <script type="text/javascript">
-      var GB_ROOT_DIR = "<?=$config['webroot']?>/js/greybox/";
-  </script>
-  <script type="text/javascript" src="./js/greybox/AJS.js"></script>
-  <script type="text/javascript" src="./js/greybox/AJS_fx.js"></script>
-  <script type="text/javascript" src="./js/greybox/gb_scripts.js"></script>
-  <link href="./js/greybox/gb_styles.css" rel="stylesheet" type="text/css" >
-  <!--greybox-->
-        </code>
-      </li>
-      <li>[GEO] script src="<?=$config['webroot']?>/jmol/Jmol.js" type='text/javascript'</li>
-      <li>[GEO] script type="text/javascript" src="./js/dom-drag.js" </li>
-    </ul>
-  </li>
-  <li>Stylesheets:
-    <ul>
-      <li>[BOTH] link rel="stylesheet" type="text/css" href="./css/FR3D.css"</li>
-      <li>[BOTH] link rel="stylesheet" media="all" type="text/css" href="./css/menu_style.css"</li>
-    </ul>
-  </li>
-  <li>Google Analytics:  php include 'php/functions.php'; google_analytics();</li>
-</ul>
-</p>
-
-<noscript>WebFR3D requires JavaScript. Please turn JavaScript on to use this feature.</noscript>
-
-<form action="php/Search.php" name="main" method="post" onSubmit="return Check(this.form)" id="mainform">
-  <input class='hidden' type='text' value='geometric' name='geometric'>
-  <input class='hidden' type='text' value='symbolic' name='symbolic'>
-
-  <div class='select left_side'>
-    <div class='handle'>[BOTH] Structures to search:</div>
-    <div style="margin-top:1px" class='content'>
-      <select class='where' id='SelectElem' multiple='multiple' name='wheretosearch[]' onclick='ShowHelp(this)'>
-      <?php get_all_pdb_files('where', get_submitted_pdb_files()); ?>
-      </select>
-    </div>
-  </div>
-
-  <div class = "dynamic">
-    <div class="handle">[SYM] Number of nucleotides:</div>
-    <select id="NumNT" name="NT[]">
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
-      <option value="10">10</option>
-      <option value="11">11</option>
-      <option value="12">12</option>
-      <option value="13">13</option>
-      <option value="14">14</option>
-      <option value="15">15</option>
-    </select>&nbsp;&nbsp;
-    <input type="button" value="Interaction Matrix" onClick="CreateMatrix(this.form)">
-    <input disabled="disabled" type="submit" id="submit" value="Search">
-    <br><br>
-    <div id="mat"> 
-    </div>
-    <br>
-  </div>
-
-  <div class='nrlists left_side'>
-    <div class='handle'>[BOTH] Non-redundant Lists:</div> 
-    <div class="content">
-      <ul>
-        <li>
-          NR release:
-          <select id='nr_release_list' name='nr_release_list'>
-            <option value='none'>----</option>
-            <?php get_nr_releases(); ?>
-          </select>
-        </li>
-        <li>
-          Resolution:
-          <select id='nr_resolution' name='nr_resolution'>
-            <option value='1.5'>1.5&Aring X-ray</option>
-            <option value='2.0'>2.0&Aring X-ray</option>
-            <option value='2.5'>2.5&Aring X-ray</option>
-            <option value='3.0'>3.0&Aring X-ray</option>
-            <option value='3.5'>3.5&Aring X-ray</option>
-            <option value='4.0'>4.0&Aring X-ray</option>
-            <option value='20.0'>Xray+cryoEM</option>
-            <option value='all'>Xray+cryoEM+NMR</option>
-          </select>
-        </li>
-        <li>
-          Learn more at <a href="<?= $config['webroot'] . "/rna3dhub/nrlist" ?>" target="_blank">RNA 3D Hub</a>
-        </li>
-      </ul>
-    </div> 
-  </div>
-
-  <div class="options left_side">
-    <div class='handle'>Options</div>
-    <div class='content'>
-      [GEO] Discrepancy: <input id="disc" class="discrepancy" type="text" name="disc" value="0.4" size="6" onChange="ValidateDiscrepancy()" onClick="ShowHelp(this)"> <br>
-      [BOTH] Email address (optional):
-      <input id="email" type="text" name="mail" class="email" onClick="ShowHelp(this)">
-      <input type="button" value="Reset" onClick="ResetAll()" >
-    </div>
-  </div>
-
-  <div class='help left_side'>
-    <div class='handle'>[BOTH] Help</div>
-    <div id='help' class='content'>Click an element to view help</div>
-  </div>
-
-  <div class = "dynamic">
-    [GEO] Query PDB:
-    <select class="what" name="PDBquery" id="PDB">
-      <option value="----">----</option>
-      <?php get_all_pdb_files('what'); ?>
-    </select>
-    &nbsp;
-    Query nucleotides: <input id="NT" type="text" class='ntsinput' name="nucleotides" onChange="LookUpNTs(this,'asynch')" onClick="ShowHelp(this)">
-    <input type="button" value="Interaction Matrix" onClick="CreateMatrix()">
-    <input type="button" value="View Query" onClick="ViewQuery()" disabled='disabled' id='view'>
-    <input disabled="disabled" type="submit" id="submit" value="Search">
-    <br><br>
-    <div id="mat"></div>
-    <br>
-  </div>
-</form>
-
-<!-- the next 9 lines are geometric-only -->
-<div id="root" class='rootdiv' style="left:220px; top:100px;">
-  <div id="handle" class='handle'>Drag<img src="./js/greybox/w_close.gif" alt="Close" id='closewin' onClick='HideJmolDiv()'></div>
-  <div id='jmol' class='content'></div>
-</div>
-<script type="text/javascript" language="javascript">
-  var theHandle = document.getElementById("handle");
-  var theRoot   = document.getElementById("root");
-  Drag.init(theHandle, theRoot);
-</script>
+      <div id="temp-body">
+        <p>Blake said: "Someone should implement me"</p>
+        <p>TO DO:
+        <ul>
+          <li>implement PHP includes</li>
+          <li>META tags:
+            <ul>
+              <li>[BOTH] meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"</li>
+              <li>[GEO] meta name="description" content="Geometric search for RNA 3D motifs in PDB files.Geometric queries of PDB files.Online version of FR3D.WebFR3D."</li>
+              <li>[GEO] meta name="keywords" content="WebFR3D,RNA,3D motifs,geometric search,RNA 3D structure,PDB"</li>
+              <li>[SYM] meta name="description" content="Symbolic search for RNA 3D motifs in PDB files"</li>
+              <li>[SYM] meta name="keywords" content="WebFR3D,RNA,3D motifs,symbolic search"</li>
+            </ul>
+          </li>
+          <li>Javascript:
+            <ul>
+              <li>[GEO] script src="./js/geometric.js" type="text/javascript"</li>
+              <li>[SYM] script src="./js/symbolic.js" type="text/javascript" </li>
+              <li>[BOTH] GREYBOX:
+                <code>
+          <!--greybox-->
+          <script type="text/javascript">
+              var GB_ROOT_DIR = "<?=$config['webroot']?>/js/greybox/";
+          </script>
+          <script type="text/javascript" src="./js/greybox/AJS.js"></script>
+          <script type="text/javascript" src="./js/greybox/AJS_fx.js"></script>
+          <script type="text/javascript" src="./js/greybox/gb_scripts.js"></script>
+          <link href="./js/greybox/gb_styles.css" rel="stylesheet" type="text/css" >
+          <!--greybox-->
+                </code>
+              </li>
+              <li>[GEO] script src="<?=$config['webroot']?>/jmol/Jmol.js" type='text/javascript'</li>
+              <li>[GEO] script type="text/javascript" src="./js/dom-drag.js" </li>
+            </ul>
+          </li>
+          <li>Stylesheets:
+            <ul>
+              <li>[BOTH] link rel="stylesheet" type="text/css" href="./css/FR3D.css"</li>
+              <li>[BOTH] link rel="stylesheet" media="all" type="text/css" href="./css/menu_style.css"</li>
+            </ul>
+          </li>
+          <li>Google Analytics:  php include 'php/functions.php'; google_analytics();</li>
+        </ul>
+        </p>
+      </div> <!-- tempbody -->
+      
+      <div id="oldbody">
+        <noscript>WebFR3D requires JavaScript. Please turn JavaScript on to use this feature.</noscript>
+        
+        <form action="php/Search.php" name="main" method="post" onSubmit="return Check(this.form)" id="mainform">
+          <input class='hidden' type='text' value='geometric' name='geometric'>
+          <input class='hidden' type='text' value='symbolic' name='symbolic'>
+        
+          <div class='select left_side'>
+            <div class='handle'>[BOTH] Structures to search:</div>
+            <div style="margin-top:1px" class='content'>
+              <select class='where' id='SelectElem' multiple='multiple' name='wheretosearch[]' onclick='ShowHelp(this)'>
+              <?php get_all_pdb_files('where', get_submitted_pdb_files()); ?>
+              </select>
+            </div>
+          </div>
+        
+          <div class = "dynamic">
+            <div class="handle">[SYM] Number of nucleotides:</div>
+            <select id="NumNT" name="NT[]">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+            </select>&nbsp;&nbsp;
+            <input type="button" value="Interaction Matrix" onClick="CreateMatrix(this.form)">
+            <input disabled="disabled" type="submit" id="submit" value="Search">
+            <br><br>
+            <div id="mat"> 
+            </div>
+            <br>
+          </div>
+        
+          <div class='nrlists left_side'>
+            <div class='handle'>[BOTH] Non-redundant Lists:</div> 
+            <div class="content">
+              <ul>
+                <li>
+                  NR release:
+                  <select id='nr_release_list' name='nr_release_list'>
+                    <option value='none'>----</option>
+                    <?php get_nr_releases(); ?>
+                  </select>
+                </li>
+                <li>
+                  Resolution:
+                  <select id='nr_resolution' name='nr_resolution'>
+                    <option value='1.5'>1.5&Aring X-ray</option>
+                    <option value='2.0'>2.0&Aring X-ray</option>
+                    <option value='2.5'>2.5&Aring X-ray</option>
+                    <option value='3.0'>3.0&Aring X-ray</option>
+                    <option value='3.5'>3.5&Aring X-ray</option>
+                    <option value='4.0'>4.0&Aring X-ray</option>
+                    <option value='20.0'>Xray+cryoEM</option>
+                    <option value='all'>Xray+cryoEM+NMR</option>
+                  </select>
+                </li>
+                <li>
+                  Learn more at <a href="<?= $config['webroot'] . "/rna3dhub/nrlist" ?>" target="_blank">RNA 3D Hub</a>
+                </li>
+              </ul>
+            </div> 
+          </div>
+        
+          <div class="options left_side">
+            <div class='handle'>Options</div>
+            <div class='content'>
+              [GEO] Discrepancy: <input id="disc" class="discrepancy" type="text" name="disc" value="0.4" size="6" onChange="ValidateDiscrepancy()" onClick="ShowHelp(this)"> <br>
+              [BOTH] Email address (optional):
+              <input id="email" type="text" name="mail" class="email" onClick="ShowHelp(this)">
+              <input type="button" value="Reset" onClick="ResetAll()" >
+            </div>
+          </div>
+        
+          <div class='help left_side'>
+            <div class='handle'>[BOTH] Help</div>
+            <div id='help' class='content'>Click an element to view help</div>
+          </div>
+        
+          <div class = "dynamic">
+            [GEO] Query PDB:
+            <select class="what" name="PDBquery" id="PDB">
+              <option value="----">----</option>
+              <?php get_all_pdb_files('what'); ?>
+            </select>
+            &nbsp;
+            Query nucleotides: <input id="NT" type="text" class='ntsinput' name="nucleotides" onChange="LookUpNTs(this,'asynch')" onClick="ShowHelp(this)">
+            <input type="button" value="Interaction Matrix" onClick="CreateMatrix()">
+            <input type="button" value="View Query" onClick="ViewQuery()" disabled='disabled' id='view'>
+            <input disabled="disabled" type="submit" id="submit" value="Search">
+            <br><br>
+            <div id="mat"></div>
+            <br>
+          </div>
+        </form>
+        
+        <!-- the next 9 lines are geometric-only -->
+        <div id="root" class='rootdiv' style="left:220px; top:100px;">
+          <div id="handle" class='handle'>Drag<img src="./js/greybox/w_close.gif" alt="Close" id='closewin' onClick='HideJmolDiv()'></div>
+          <div id='jmol' class='content'></div>
+        </div>
+        <script type="text/javascript" language="javascript">
+          var theHandle = document.getElementById("handle");
+          var theRoot   = document.getElementById("root");
+          Drag.init(theHandle, theRoot);
+        </script>
+      </div> <!-- oldbody -->
 
 {% endblock %}
 
