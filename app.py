@@ -4,6 +4,8 @@ from flask import g
 from flask import redirect
 from flask import url_for
 
+import json
+
 import mimerender
 
 import web_fr3d
@@ -12,6 +14,11 @@ app = Flask(__name__, static_url_path='/web-fr3d/static')
 mimerender = mimerender.FlaskMimeRender()
 
 # TODO: Should we use flask-sqlachemly? Seems to do most of what we need
+
+
+with open('conf/config.json') as cfg:
+    config = json.load(cfg)
+print config
 
 
 @app.before_request
@@ -32,6 +39,7 @@ def teardown_request(exception):
         queue.close()
 
 
+#@app.route("/WebFR3D", methods=['GET', 'POST'])
 @app.route("/web-fr3d", methods=['GET', 'POST'])
 @mimerender(
     html=web_fr3d.render.to_html,
