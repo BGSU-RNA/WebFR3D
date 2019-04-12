@@ -21,19 +21,6 @@
             <ul>
               <li>[GEO] script src="./js/geometric.js" type="text/javascript"</li>
               <li>[SYM] script src="./js/symbolic.js" type="text/javascript" </li>
-              <li>[BOTH] GREYBOX:
-                <code>
-          <!--greybox-->
-          <script type="text/javascript">
-              var GB_ROOT_DIR = "<?=$config['webroot']?>/js/greybox/";
-          </script>
-          <script type="text/javascript" src="./js/greybox/AJS.js"></script>
-          <script type="text/javascript" src="./js/greybox/AJS_fx.js"></script>
-          <script type="text/javascript" src="./js/greybox/gb_scripts.js"></script>
-          <link href="./js/greybox/gb_styles.css" rel="stylesheet" type="text/css" >
-          <!--greybox-->
-                </code>
-              </li>
               <li>[GEO] script src="<?=$config['webroot']?>/jmol/Jmol.js" type='text/javascript'</li>
               <li>[GEO] script type="text/javascript" src="./js/dom-drag.js" </li>
             </ul>
@@ -48,11 +35,108 @@
         </ul>
         </p>
       </div> <!-- tempbody -->
+
+      <div id="newbody">
+        <noscript>WebFR3D requires JavaScript. Please turn JavaScript on to use this feature.</noscript>
+        
+        <form action="php/Search.php" name="main" method="post" onSubmit="return Check(this.form)" id="newform">
+          <input class='hidden' type='text' value='geometric' name='geometric'>
+          <input class='hidden' type='text' value='symbolic' name='symbolic'>
+
+          <h3>1. For what are you searching?</h3>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="searchType">1a. Select your search type:</label>
+            <div class="col-sm-9">
+              <div class="radio">
+                <label><input type="radio" name="searchType" id="searchG" checked="checked">Geometric: you want to find more instances of a known motif.</label>
+              </div>
+              <hr>
+              <div class="radio">
+                <label><input type="radio" name="searchType" id="searchS">Symbolic: you want to search based upon a set of specified interactions.</label>
+                <label>Number of nucleotides to search:<input type="text" name="symNT" id="symNT"></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="searchInput">1b. Enter your query parameters:</label>
+            <div class="textbox col-sm-9">
+              <input type="text" name="searchInput" id="searchT" size="60">
+            </div>
+          </div>
+
+          <h3>2. Constrain your search (optional):</h3>
+          <p>Constraints can speed up searches considerably.</p>
+          <div class="form-group">
+            <label class="control-label col-sm-3">2. Enter your query constraints:</label>
+            <div class="col-sm-9">
+              <input type="button" name="intMatrix" id="intMatrix" value="Interaction Matrix" onClick="CreateMatrix()"> 
+            </div>
+          </div>
+
+          <h3>3. Where do you want to search?</h3>
+          <p>Choose one of the three following options:</p>
+          <div class="form-group">
+            <label class="control-label col-sm-3">3. Select a search target:</label>
+            <div class="col-sm-9">
+              <div class="radio">
+                <label><input type="radio" name="targetPDB" id="searchTarget">By PDB ID:  enter a list of PDB IDs, comma-separated.</label>
+                <label><input type="radio" name="targetRPS" id="searchTarget">By Representative Set: enter the release number, and optionally select a resolution cutoff and the types of structures to consider.</label>
+                <label><input type="radio" name="targetEQC" id="searchTarget">By Equivalence Class: under development (Sri).</label>
+              </div>
+              <div class="radio">
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="xray"><input type="checkbox" id="xray">X-ray</label>
+            <label for="crem"><input type="checkbox" id="crem">Cryo-EM</label>
+            <label for="nmrs"><input type="checkbox" id="nmrs">NMR</label>
+          </div>
+        
+          <h3>4. Adjust the discrepancy cutoff for geometic searches:</h3>
+          <p>The default discrepancy cutoff is 0.4, with a valid range of <strong>X TO Y</strong>.</p>
+          <div class="form-group">
+            <label class="control-label col-sm-3">4. Set the discrepancy cutoff:</label>
+            <input id="disc" class="discrepancy" type="text" name="disc" value="0.4" 
+                   style="text-align: right;" size="6" onChange="ValidateDiscrepancy()" onClick="ShowHelp(this)">
+          </div>
+
+          <h3>5. (Optional) Enter your email address:</h3>
+          <p>To receive notifications about the progress of your query. It will not be shared.</p>
+          <div class="form-group">
+            <label class="control-label col-sm-3">5. Enter your email address:</label>
+            <div>
+              <input id="email" type="text" name="mail" size="60" onClick="ShowHelp(this)">
+            </div>
+          </div>
+
+          <h3>6. Search!</h3>
+          <div class="form-group">
+          </div>
+
+          <div class="form-group">
+          </div>
+
+          <div class="form-group">
+          </div>
+
+          <div class="form-group">
+          </div>
+
+          <div class="form-group">
+          </div>
+
+        </form>
+
+      </div> <!-- newbody -->
       
+<!--
       <div id="oldbody">
         <noscript>WebFR3D requires JavaScript. Please turn JavaScript on to use this feature.</noscript>
         
-        <form action="php/Search.php" name="main" method="post" onSubmit="return Check(this.form)" id="mainform">
+        <form action="php/Search.php" class="form-horizontal" name="main" method="post" onSubmit="return Check(this.form)" id="mainform">
           <input class='hidden' type='text' value='geometric' name='geometric'>
           <input class='hidden' type='text' value='symbolic' name='symbolic'>
         
@@ -84,6 +168,23 @@
               <option value="15">15</option>
             </select>&nbsp;&nbsp;
             <input type="button" value="Interaction Matrix" onClick="CreateMatrix(this.form)">
+            <input type="button" value="View Query" onClick="ViewQuery()" disabled='disabled' id='view'>
+            <input disabled="disabled" type="submit" id="submit" value="Search">
+            <br><br>
+            <div id="mat"> 
+            </div>
+            <br>
+          </div>
+
+          <div class = "dynamic">
+            <div class="handle">[GEO] Query PDB:</div>
+            <select class="what" name="PDBquery" id="PDB">
+              <option value="----">----</option>
+              <?php get_all_pdb_files('what'); ?>
+            </select>
+            &nbsp;
+            Query nucleotides: <input id="NT" type="text" class='ntsinput' name="nucleotides" onChange="LookUpNTs(this,'asynch')" onClick="ShowHelp(this)">
+            <input type="button" value="Interaction Matrix" onClick="CreateMatrix()"> 
             <input disabled="disabled" type="submit" id="submit" value="Search">
             <br><br>
             <div id="mat"> 
@@ -116,10 +217,15 @@
                   </select>
                 </li>
                 <li>
-                  Learn more at <a href="<?= $config['webroot'] . "/rna3dhub/nrlist" ?>" target="_blank">RNA 3D Hub</a>
+                  Learn more at <a href="<?= $config['webroot'] . '/rna3dhub/nrlist' ?>" target="_blank">RNA 3D Hub</a>
                 </li>
               </ul>
             </div> 
+          </div>
+
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="xray">
+            <label class="custom-control-label" for="xray">X-ray</label>
           </div>
         
           <div class="options left_side">
@@ -136,22 +242,6 @@
             <div class='handle'>[BOTH] Help</div>
             <div id='help' class='content'>Click an element to view help</div>
           </div>
-        
-          <div class = "dynamic">
-            [GEO] Query PDB:
-            <select class="what" name="PDBquery" id="PDB">
-              <option value="----">----</option>
-              <?php get_all_pdb_files('what'); ?>
-            </select>
-            &nbsp;
-            Query nucleotides: <input id="NT" type="text" class='ntsinput' name="nucleotides" onChange="LookUpNTs(this,'asynch')" onClick="ShowHelp(this)">
-            <input type="button" value="Interaction Matrix" onClick="CreateMatrix()">
-            <input type="button" value="View Query" onClick="ViewQuery()" disabled='disabled' id='view'>
-            <input disabled="disabled" type="submit" id="submit" value="Search">
-            <br><br>
-            <div id="mat"></div>
-            <br>
-          </div>
         </form>
         
         <!-- the next 9 lines are geometric-only -->
@@ -165,6 +255,7 @@
           Drag.init(theHandle, theRoot);
         </script>
       </div> <!-- oldbody -->
+-->
 
 {% endblock %}
 
