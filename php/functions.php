@@ -40,9 +40,9 @@ function get_submitted_pdb_files() {
         foreach($submitted as $pdb_id) {
             // check each entry with a regex
             if ( preg_match('/[A-z0-9]{4}/', $pdb_id ) ) {
-                $pdb_ids[] = $pdb_id;                
+                $pdb_ids[] = $pdb_id;
             }
-        }        
+        }
     }
 
     return $pdb_ids;
@@ -107,6 +107,9 @@ function get_nr_list_for_matlab($release_id, $resolution)
 
 function createGeometricQueryFile($_POST, $id, $root)
 {
+
+
+    // ================ MATLAB file =====================
     $FileName = "$root/InputScript/Input/Query_{$id}.m";
     $fh = fopen($FileName, 'w') or die("Can't open Query file");
     fwrite($fh, "Query.Filename = '{$_POST["PDBquery"]}';\n");
@@ -202,8 +205,19 @@ function createGeometricQueryFile($_POST, $id, $root)
 
 //    fwrite($fh, "try,");
 //    fwrite($fh, "xFR3DSearch;\n");
-    fwrite($fh, "tic;\naWebFR3DSearch;\n");
-    fwrite($fh, "aWriteHTMLForSearch('{$id}');\ntoc;");
+        $developers = array("zirbel@bgsu.edu","jjcanno@bgsu.edu","leontis@bgsu.edu","sria@bgsu.edu");
+
+    if (in_array($_POST["mail"],$developers))
+    {
+        echo "Not running Matlab";
+    }
+    else
+    {
+        fwrite($fh, "tic;\naWebFR3DSearch;\n");
+        fwrite($fh, "aWriteHTMLForSearch('{$id}');\ntoc;");
+    }
+
+
 //	fwrite($fh, "catch ME, movefile('$root/InputScript/Input/Query_{$id}.m','$root/InputScript/Failed');");
 //	fwrite($fh, "disp('An error occured while processing the query');return;end");
     fclose($fh);
@@ -216,6 +230,10 @@ function createGeometricQueryFile($_POST, $id, $root)
 function createSymbolicQueryFile($_POST, $id, $root)
 {
     error_reporting(E_ALL);
+
+
+
+    // ================ Matlab output, writes a .m file which is then executed ====
     $FileName = "$root/InputScript/Input/Query_{$id}.m";
     $fh = fopen($FileName, 'w') or die("Can't open Query file");
 
@@ -223,6 +241,7 @@ function createSymbolicQueryFile($_POST, $id, $root)
     fwrite($fh, "Query.Geometric = 0;\n");
     fwrite($fh, "Query.ExcludeOverlap = 1;\n");
     fwrite($fh, "Query.NumNT = '{$_POST["NT"][0]}';\n");
+
     if ( $_POST["mail"] != '')
     {
     	fwrite($fh, "Query.Email = '{$_POST["mail"]}';\n");
@@ -274,8 +293,18 @@ function createSymbolicQueryFile($_POST, $id, $root)
         }
     }
 
-    fwrite($fh, "tic;aWebFR3DSearch;\n");
-    fwrite($fh, "aWriteHTMLForSearch('{$id}');toc;");
+    $developers = array("zirbel@bgsu.edu","jjcanno@bgsu.edu","leontis@bgsu.edu","sria@bgsu.edu");
+
+    if (in_array($_POST["mail"],$developers))
+    {
+        echo "Not running Matlab";
+    }
+    else
+    {
+        fwrite($fh, "tic;aWebFR3DSearch;\n");
+        fwrite($fh, "aWriteHTMLForSearch('{$id}');toc;");
+    }
+
     fclose($fh);
 
 }

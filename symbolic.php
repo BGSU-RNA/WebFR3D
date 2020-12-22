@@ -27,7 +27,7 @@
     <li><a href="<?= $config['webroot'] . "/webfr3d" ?>">WebFR3D</a></li>
 	<li><a href="./symbolic.php">Symbolic Search</a></li>
     <li><a href="./geometric.php">Geometric search</a></li>
-	<li><a>Select an example</a>
+	<li><a>Select an example:</a>
 		<ul>
 			<li><a onclick="Hairpins()">All Hairpin Loops in 3I8I</a></li>
 			<li><a onclick="Tetraloops()">All Tetraloops in 3I8I</a></li>
