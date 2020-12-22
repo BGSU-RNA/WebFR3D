@@ -4,6 +4,9 @@ div.select {
 .center {
 	text-align:center;
 }
+#mainform {
+	margin-left: 5px;
+}
 div.dynamic {
     position:absolute;
     top:70px;
@@ -154,7 +157,7 @@ textarea {
 	background-color: white;
 }
 .email {
-	width:95%;
+	width:30%;
 }
 input[type=text]:focus {
 	border: 1px solid #a0acbf;
