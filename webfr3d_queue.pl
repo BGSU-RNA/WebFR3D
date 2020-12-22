@@ -37,7 +37,7 @@ my $INPUT_DIR      = $WEBFR3D . '/InputScript/Input';
 my $RUN_DIR        = $WEBFR3D . '/InputScript/Running';
 # jvm is required for urlread and other matlab functions
 my $MATLAB         = $config{matlab};
-
+# my $PYTHON         = $config{python};
 
 ### Signal Handling ###
 
@@ -80,7 +80,7 @@ MAIN:
     # Manage the thread pool until signalled to terminate
     while (! $TERM) {
 
-       # get the queries
+       # get Matlab queries
        my @queries = <$INPUT_DIR/*.m>;
 
        if ( scalar(@queries) > 0 ) {
@@ -97,12 +97,40 @@ MAIN:
             $job = $parts[-1];
             my $command = 'mv ' . $INPUT_DIR . '/' . $job . ' ' . $RUN_DIR  . '/' . $job;
             system($command);
+            print($command . "\n");
+
             $command = $MATLAB . '"addpath(' . "'" . $WEBFR3D_matlab . "')" . ';aWebFR3D(' . "'" . $job . "')" . '"';
             my $work = "ulimit -t $TIMEOUT;$command;perl $WEBFR3D" . '/' . "check_results.pl $job";
             print($work . "\n");
             $work_queues{$tid}->enqueue($work);
+
         }
-        sleep(5);
+
+       # get Python queries
+       @queries = <$INPUT_DIR/*.json>;
+
+       if ( scalar(@queries) > 0 ) {
+            # Wait for an available thread
+            my $tid = $IDLE_QUEUE->dequeue();
+
+            # Check for termination condition
+            last if ($tid < 0);
+
+            # Give the thread some work to do
+            # my $work = 5 + int(rand(10));
+            my $job = pop(@queries);
+            my @parts = split('/',$job);
+            $job = $parts[-1];
+            my $command = 'rm ' . $INPUT_DIR . '/' . $job;
+            system($command);
+            print($command . "\n");
+
+            my $pythonwork = 'scl enable python27 "export PYTHONPATH=/usr/local/pipeline/fr3d-python; /opt/rh/python27/root/usr/bin/python /var/www/web-fr3d/python/FR3D.py ' . $job .'"';
+            print($pythonwork . "\n");
+            $work_queues{$tid}->enqueue($pythonwork);
+        }
+
+        sleep(2);
     }
 
 
@@ -134,7 +162,7 @@ sub worker
 
     # Work loop
      while (! $TERM) {
-        # Indicate that were are ready to do work
+        # Indicate that we are are ready to do work
         printf("Idle     -> %2d\n", $tid);
         $IDLE_QUEUE->enqueue($tid);
 
