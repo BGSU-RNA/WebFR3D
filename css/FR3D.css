@@ -14,17 +14,17 @@ div.dynamic {
 }
 input.diagonal {
     text-align:center;
-    width:60px;
+    width:100px;
 }
 input.inter {
     background-color:yellow;
     text-align:center;
-    width:60px;
+    width:100px;
 }
 input.dist {
     background-color:#00FFFF;
     text-align:center;
-    width:60px;
+    width:100px;
 }
 select.where {
     height:100px;
