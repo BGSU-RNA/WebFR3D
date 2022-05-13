@@ -127,7 +127,7 @@ function CreateMatrix(form)
                 }
                 else
                 {
-                    headerTd.innerHTML = 'NT' + i;
+                    headerTd.innerHTML = 'Unit' + i;
                 }
                 headerRow.appendChild(headerTd);
             }
@@ -142,7 +142,7 @@ function CreateMatrix(form)
                       newTR.appendChild(newTD);
                       if ( j == 1 )
                       {
-                          newTD.innerHTML = 'NT' + i;
+                          newTD.innerHTML = 'Unit' + i;
                       }
                       else
                       {
