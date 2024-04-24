@@ -145,7 +145,7 @@ if (isset($_GET['id'])) {
 	    <div id="mat"></div>
 
 	</td></tr><tr><td valign="top"><font size="+2">3.</font></td><td>
-	    What structures should be searched?  Use (a), (b), or both.
+	    What structures from the Protein Data Bank should be searched?  Use (a), (b), or both.
 	</td></tr><tr><td valign="top"><font size="+1">a.</font></td><td>
 	    List individual structures (like 6ZMI) or chains (like 6ZMI|1|L5), separated by commas:
 		<input id="StructuresToSearch" type="text" size="100" name="StructuresToSearch" onClick="ShowHelp(this)">
@@ -156,12 +156,13 @@ if (isset($_GET['id'])) {
             <select id='RepSetResolution' name='RepSetResolution'>
               <option value=''></option>
               <option value='1.5A'>1.5&Aring X-ray</option>
-              <option value='2.0A'>2.0&Aring X-ray</option>
-              <option value='2.5A'>2.5&Aring X-ray and cryoEM</option>
-              <option value='3.0A'>3.0&Aring X-ray and cryoEM</option>
-              <option value='3.5A'>3.5&Aring X-ray and cryoEM</option>
-              <option value='4.0A'>4.0&Aring X-ray and cryoEM</option>
+              <option value='2.0A'>2.0&Aring X-ray and cryo-EM</option>
+              <option value='2.5A'>2.5&Aring X-ray and cryo-EM</option>
+              <option value='3.0A'>3.0&Aring X-ray and cryo-EM</option>
+              <option value='3.5A'>3.5&Aring X-ray and cryo-EM</option>
+              <option value='4.0A'>4.0&Aring X-ray and cryo-EM</option>
               <option value='20.0A'>X-ray and cryoEM</option>
+              <option value='NMR'>NMR</option>
               <option value='all'>X-ray and cryoEM and NMR</option>
             </select><br>
 

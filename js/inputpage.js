@@ -10,6 +10,8 @@ function FillQueryParameters(qdata,form)
     document.getElementById("UnitIDs").value = "";
     if ("unitID" in qdata) {
         document.getElementById("UnitIDs").value = qdata["unitID"];
+        document.getElementById('viewquery').disabled = false;
+
     }
     document.getElementById("disc").value = "";
     if ("discrepancy" in qdata) {
@@ -27,10 +29,8 @@ function FillQueryParameters(qdata,form)
     {
         for ( j = 1; j <= cells; j++ )
         {
-            document.getElementById("cell"+i+","+j).value = "temp";
-
+            document.getElementById("cell"+i+","+j).value = "";
             document.getElementById("cell"+i+","+j).value = qdata["interactionMatrix"][i-1][j-1].replace(/\*/g,"'");
-
         }
     }
 
