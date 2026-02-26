@@ -1,5 +1,10 @@
 # About
 
+This repository has been superseded by a Flask server for WebFR3D.
+The new Flask server works better, searches faster, and stores the results in a better format.
+[Launch a WebFR3D search](https://rna.bgsu.edu/fr3d/).
+The Flask code is in the flask directory in the [fr3d-python repository](https://github.com/BGSU-RNA/fr3d-python/).
+
 **WebFR3D** is the on-line version of ‘Find RNA 3D’ ([FR3D](http://rna.bgsu.edu/FR3D)), a program for annotating atomic-resolution RNA 3D structure files and searching them efficiently to locate and compare RNA 3D structural motifs.
 
 WebFR3D provides on-line access to the central features of FR3D, including geometric and symbolic search modes, without need for installing programs or downloading and maintaining 3D structure data locally.
